@@ -1,6 +1,7 @@
 class Database{
 
   constructor(){
+    //localStorage.clear();
     this.usersArr=this.initialize('all_users');
     this.apptArr=this.initialize('appointments');
   }
@@ -21,10 +22,17 @@ class Database{
     return "all records";
   }
 
+  getRecord(id){
+    for (let record of this.apptArr){
+      if(record.id==id){
+        return JSON.stringify(record);
+      }
+    }
+  }
+
   add(record){
-    this.apptArr.push(record);
+    this.apptArr.push(JSON.parse(record));
     localStorage.setItem('appointments',JSON.stringify(this.apptArr));
     return "added!";
   }
-
 }
