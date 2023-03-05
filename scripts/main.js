@@ -1,6 +1,3 @@
-let pages=[];
-let client=new Client();
-
 function init(){
     displayPage("login");
     history.replaceState({}, 'Login', '#login');
@@ -36,14 +33,47 @@ function poppin(){
 
 function initDataButtons(){
     let seeAllButton= document.getElementById("seeAll");
+    let seeRecordButton= document.getElementById("seeRecord");
     let addButton= document.getElementById("add");
-    seeAllButton.addEventListener("click",client.seeAll);
+    seeAllButton.addEventListener("click",seeAll);
+    seeRecordButton.addEventListener("click",seeRecord);
     addButton.addEventListener("click",newRecordInfo);
 }
 
 function newRecordInfo(){
     let record={id:0, name:"a", date:new Date(2018, 11, 24, 10, 33)};
-    client.add(JSON.stringify(record));
+    add(JSON.stringify(record));
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+function seeAll(){
+    let request=new FXMLHttpRequest();    
+    request.onload= function() {
+        if (this.status == 200) {
+        document.getElementById("request").innerHTML = request.responseText;
+    }};
+    request.open("GET", "application/all");
+    request.send();   
+}
+
+function seeRecord(){
+    let id=0;
+    let request=new FXMLHttpRequest();    
+    request.onload= function() {
+        if (this.status == 200) {
+        document.getElementById("request").innerHTML = request.responseText;
+    }};
+    request.open("GET", `application/${id}`);
+    request.send();
+}
+
+function add(newRecord){
+    let request=new FXMLHttpRequest();    
+    request.onload= function() {
+        if (this.status == 200) {
+        document.getElementById("request").innerHTML = request.responseText;
+    }};
+    request.open("POST", "application/add",newRecord);
+    request.send();   
+}

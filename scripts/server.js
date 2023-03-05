@@ -1,5 +1,4 @@
 class Server{
-
     db= new Database();
 
     getRequest(request){
@@ -7,12 +6,17 @@ class Server{
         switch(request.method){
 
             case('GET'):
-            request.responseText= this.db.getAll();
+                let type=request.url.split('/')[1];
+                if(type==="all"){
+                    request.responseText= this.db.getAll();
+                }else{
+                    request.responseText= this.db.getRecord(type);
+                }
             break;
 
             case('POST'):
-            request.responseText= this.db.add(request.body);
-            break;
+                request.responseText= this.db.add(request.body);
+                break;
         }
     }
 }
