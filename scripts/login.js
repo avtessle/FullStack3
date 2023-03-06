@@ -13,8 +13,8 @@ function signIn(){
         if (this.status == 200) {
         if(request.responseText==="true"){
             console.log("user exists");
-            cleanInputs();
-            window.location.replace('/main.html');
+            //cleanInputs();
+            window.location.replace("./main.html");
         }
     }};
     request.open("USER", "login/check",user);
@@ -31,8 +31,8 @@ function register(){
         if (this.status == 200) {
         if(request.responseText==="true"){
             console.log("user added");
-            cleanInputs();
-            window.location.replace('/main.html');
+            //cleanInputs();
+            window.location.replace("./main.html");
         }
     }};
     request.open("USER", "login/add",user);
