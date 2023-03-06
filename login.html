@@ -7,52 +7,34 @@
   </head>
 
   <body>
-    <template id="login">
-      <div>
+
+    <div class="login-form">
+      <form>
         <h1>Login</h1>
-        <ol>
-          <li><a href="#" target="login" class="nav-link">LOGIN</a></li>
-          <li><a href="#" target="register" class="nav-link">REGISTER</a></li>
-          <li><a href="#" target="application" class="nav-link">APPLICATION</a></li>
-        </ol>
-      </div>
-    </template>
 
-    <template id="register">
-      <div>
-        <h1>Register</h1>
-        <ol>
-          <li><a href="#" target="login" class="nav-link">LOGIN</a></li>
-          <li><a href="#" target="register" class="nav-link">REGISTER</a></li>
-          <li><a href="#" target="application" class="nav-link">APPLICATION</a></li>
-        </ol>
-      </div>
-    </template>
+        <div class="content">
+          <div class="input-field">
+            <input id="uname" type="userName" placeholder="User Name" required>
+          </div>
+          <div class="input-field">
+            <input id="psw" type="password" placeholder="Password" required>
+          </div>
+        </div>
 
-    <template id="application">
-      <div>
-        <h1>Application</h1>
-        <ol>
-          <li><a href="#" target="login" class="nav-link">LOGIN</a></li>
-          <li><a href="#" target="register" class="nav-link">REGISTER</a></li>
-          <li><a href="#" target="application" class="nav-link">APPLICATION</a></li>
-        </ol>
+        <div class="action">
+          <button>Register</button>
+          <button>Sign in</button>
+        </div>
 
-      <div>
-        <button id="seeAll">See all records</button>
-        <button id="seeRecord">See one record</button>
-        <button id="add">Add new record</button>
-        <h1 id="request"></h1>
-      </div>
-
-      </div>
-    </template>
+      </form>
+    </div>
 
     <script  src="./scripts/database.js"></script>
     <script  src="./scripts/server.js"></script>
     <script  src="./scripts/network.js"></script>
     <script  src="./scripts/fajax.js"></script>
-    <!-- <script  src="./scripts/client.js"></script> -->
-    <script  src="./scripts/main.js"></script>
+    <script  src="./scripts/requests.js"></script>
+    <script  src="./scripts/login.js"></script>
+    
   </body>
 </html>

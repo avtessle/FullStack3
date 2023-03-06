@@ -1,9 +1,11 @@
+//Initialize with a default page
 function init(){
     displayPage("login");
     history.replaceState({}, 'Login', '#login');
     window.addEventListener('popstate', poppin);
 }
 
+//Navigation between the pages
 function nav(ev){
     ev.preventDefault(); 
     document.body.removeChild(document.body.lastElementChild)
@@ -12,6 +14,7 @@ function nav(ev){
     history.pushState({}, pageId, `#${pageId}`);
 }
 
+//Display chosen page
 function displayPage(pageId){
     let temp = document.getElementById(pageId);
     let clon = temp.content.cloneNode(true);
@@ -20,18 +23,28 @@ function displayPage(pageId){
     document.querySelectorAll('.nav-link').forEach((link)=>{
         link.addEventListener('click', nav);
     })
-    if(pageId==="application"){
-        initDataButtons();
+
+    switch(pageId){
+        case "application":
+            initApp();
+            break;
+        case "login":
+            initLogin();
+            break;
+        case "register":
+            initRegister(); 
     }
 }
 
+//Event of url change
 function poppin(){
     let hash = location.hash.replace('#' ,'');
     document.body.removeChild(document.body.lastElementChild)
     displayPage(hash)
 }
 
-function initDataButtons(){
+//Add event listeners to the buttons of Application
+function initApp(){
     let seeAllButton= document.getElementById("seeAll");
     let seeRecordButton= document.getElementById("seeRecord");
     let addButton= document.getElementById("add");
@@ -40,40 +53,16 @@ function initDataButtons(){
     addButton.addEventListener("click",newRecordInfo);
 }
 
-function newRecordInfo(){
-    let record={id:0, name:"a", date:new Date(2018, 11, 24, 10, 33)};
-    add(JSON.stringify(record));
-}
-
+//Initialize the app
 document.addEventListener('DOMContentLoaded', init);
 
-function seeAll(){
-    let request=new FXMLHttpRequest();    
-    request.onload= function() {
-        if (this.status == 200) {
-        document.getElementById("request").innerHTML = request.responseText;
-    }};
-    request.open("GET", "application/all");
-    request.send();   
-}
+//login and register- move to login.js
+// function initLogin(){
+//     let logInButton = document.getElementById("loginBtn")
+//     logInButton.addEventListener('click', login);
+// }
 
-function seeRecord(){
-    let id=0;
-    let request=new FXMLHttpRequest();    
-    request.onload= function() {
-        if (this.status == 200) {
-        document.getElementById("request").innerHTML = request.responseText;
-    }};
-    request.open("GET", `application/${id}`);
-    request.send();
-}
-
-function add(newRecord){
-    let request=new FXMLHttpRequest();    
-    request.onload= function() {
-        if (this.status == 200) {
-        document.getElementById("request").innerHTML = request.responseText;
-    }};
-    request.open("POST", "application/add",newRecord);
-    request.send();   
-}
+// function initRegister(){
+//     let registerButton = document.getElementById("registerBtn")
+//     registerButton.addEventListener('click', register);
+// }

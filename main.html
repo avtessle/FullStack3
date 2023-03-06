@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>App Page</title>
+    <link rel="stylesheet" href="./styles/login.css">
+  </head>
+
+  <body>
+    <template id="login">
+      <div>
+
+        <h1>Login</h1>
+        <ol>
+          <li><a href="#" target="login" class="nav-link">LOGIN</a></li>
+          <li><a href="#" target="register" class="nav-link">REGISTER</a></li>
+          <li><a href="#" target="application" class="nav-link">APPLICATION</a></li>
+        </ol>
+
+        <form>
+          <input id="uname" type="userName" placeholder="User Name" required>     
+          <button id="loginBtn">Log In</button>
+          <h1 id="loginLabel"></h1>
+        </form>
+
+      </div>
+    </template>
+
+    <template id="register">
+      <div>
+        <h1>Register</h1>
+        <ol>
+          <li><a href="#" target="login" class="nav-link">LOGIN</a></li>
+          <li><a href="#" target="register" class="nav-link">REGISTER</a></li>
+          <li><a href="#" target="application" class="nav-link">APPLICATION</a></li>
+        </ol>
+        <button id="registerBtn">Register</button>
+      </div>
+    </template>
+
+    <template id="application">
+      <div>
+        <h1>Application</h1>
+        <ol>
+          <li><a href="#" target="login" class="nav-link">LOGIN</a></li>
+          <li><a href="#" target="register" class="nav-link">REGISTER</a></li>
+          <li><a href="#" target="application" class="nav-link">APPLICATION</a></li>
+        </ol>
+
+      <div>
+        <button id="seeAll">See all records</button>
+        <button id="seeRecord">See one record</button>
+        <button id="add">Add new record</button>
+        <h1 id="request"></h1>
+      </div>
+
+      </div>
+    </template>
+
+    <script  src="./scripts/database.js"></script>
+    <script  src="./scripts/server.js"></script>
+    <script  src="./scripts/network.js"></script>
+    <script  src="./scripts/fajax.js"></script>
+    <script  src="./scripts/requests.js"></script>
+    <script  src="./scripts/main.js"></script>
+  </body>
+</html>
