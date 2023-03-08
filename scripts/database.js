@@ -1,19 +1,19 @@
 class Database{
 
   constructor(){
-    //localStorage.clear();
+    // localStorage.clear();
+    //the arrays as JavaScripts arrays
     this.usersArr=this.initialize('all_users');
     this.apptArr=this.initialize('appointments');
   }
 
-  //Initialize the arrays to JavaScript
+  //Initialize the arrays
   initialize(key){
     let arr=localStorage.getItem(key);
     if(arr===null){
       arr = new Array();
       localStorage.setItem(key,JSON.stringify(arr));
-    }
-    else{
+    }else{
       arr=JSON.parse(arr);
     }
     return arr;
@@ -21,44 +21,82 @@ class Database{
 
   //Check if the user exists
   checkUser(user){
-    // for (const currentUser of arr){
-    //   if(currentUser.name===user.name){
-    //     if(currentUser.password===user.password){
-    //       cleanInputs();
-    //       window.location.replace("./main.html");
-    //       sessionStorage.setItem("cuurentUser",username);
-    //       return;
-    //     }
-    //     alert("wrong password");
-    //     return;
-    //   }
-    // }
-    // alert("user name does not exist");
-    return "true";
+    let userCheck=JSON.parse(user);
+
+    for (let currentUser of this.usersArr){
+      currentUser=JSON.parse(currentUser);
+
+      if(currentUser.name===userCheck.name){
+        if(currentUser.password===userCheck.password){
+          sessionStorage.setItem("cuurentUser",username);
+          return "true";
+        }
+        alert("wrong password");
+        return "false";
+      }
+    }
+    alert("user name does not exist");
+    return "false";
   }
 
   //Add new user
   addUser(user){
-    return "true";
+    let userCheck=JSON.parse(user);
+
+    for (let currentUser of this.usersArr){
+      currentUser=JSON.parse(currentUser);
+      if(currentUser.name===userCheck.name){
+        alert("uesr name already exist!")
+        return "false";
+      }
+    }
+
+    if(this.addUserData(userCheck.name,userCheck.password)){
+      //cleanInputs();
+      sessionStorage.setItem("cuurentUser",username);
+      return "true";
+    }
+  }
+
+  addUserData(userName, userPassword){
+    //test username
+    let tesRegex=  /^[A-Za-z]\w*$/;
+    if(!userName.match(tesRegex)) 
+    { 
+      alert("username must atart with a letter and contain only characters, digits and underscore");
+      return false;
+    }
+  
+    // //test password
+    // if (!checkPassword(userPassword)){
+    //   return false;
+    // }
+  
+    let user=JSON.stringify({name:userName, password:userPassword});
+    this.usersArr.push(user);
+    localStorage.setItem('all_users',JSON.stringify(this.usersArr));
+    return true;
   }
 
   //Get all the records
   getAllRecords(){
-    return "all records";
+    return JSON.stringify(this.apptArr);
   }
 
   //Get a specific record
   getRecord(id){
     for (let record of this.apptArr){
+      record=JSON.parse(record)
       if(record.id==id){
         return JSON.stringify(record);
       }
     }
+    return "No matching record was found"
   }
 
   //Add new record
-  addRecoed(record){
-    this.apptArr.push(JSON.parse(record));
+  addRecord(record){
+    this.apptArr.push(record);
     localStorage.setItem('appointments',JSON.stringify(this.apptArr));
     return "added!";
   }

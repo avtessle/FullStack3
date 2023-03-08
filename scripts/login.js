@@ -13,7 +13,7 @@ function signIn(){
         if (this.status == 200) {
         if(request.responseText==="true"){
             console.log("user exists");
-            //cleanInputs();
+            cleanInputs();
             window.location.replace("./main.html");
         }
     }};
@@ -31,10 +31,15 @@ function register(){
         if (this.status == 200) {
         if(request.responseText==="true"){
             console.log("user added");
-            //cleanInputs();
+            cleanInputs
             window.location.replace("./main.html");
         }
     }};
     request.open("USER", "login/add",user);
     request.send(); 
+}
+
+function cleanInputs(){
+    document.getElementById('uname').value = "";
+    document.getElementById('psw').value = "";
 }
