@@ -31,7 +31,7 @@ function register(){
         if (this.status == 200) {
         if(request.responseText==="true"){
             console.log("user added");
-            cleanInputs
+            cleanInputs();
             window.location.replace("./main.html");
         }
     }};
@@ -43,3 +43,7 @@ function cleanInputs(){
     document.getElementById('uname').value = "";
     document.getElementById('psw').value = "";
 }
+
+// function checkPassword(){
+//     "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})";
+// }

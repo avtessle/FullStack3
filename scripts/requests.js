@@ -1,6 +1,13 @@
+var run_id=0;
+
 //Get data of the new record to add
 function newRecordInfo(){
-    let record={id:0, name:"a", date:new Date(2018, 11, 24, 10, 33)};
+    let cName = document.getElementById("cname").value;
+    let cPhone = document.getElementById("cphone").value;
+    let cDate = document.getElementById("cdate").value;
+    let cTime = document.getElementById("ctime").value;
+
+    let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
     add(JSON.stringify(record));
 }
 
@@ -9,9 +16,10 @@ function seeAll(){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-        document.getElementById("request").innerHTML = request.responseText;
+            alert("ok!");
+            //document.getElementById("request").innerHTML = request.responseText;
     }};
-    request.open("GET", "application/all");
+    request.open("GET", "appointment/all");
     request.send();   
 }
 
@@ -21,9 +29,11 @@ function seeRecord(){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-        document.getElementById("request").innerHTML = request.responseText;
-    }};
-    request.open("GET", `application/${id}`);
+            alert("ok!");
+            //document.getElementById("request").innerHTML = request.responseText;    
+        }
+    };
+    request.open("GET", `appointment/${id}`);
     request.send();
 }
 
@@ -32,8 +42,10 @@ function add(newRecord){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-        document.getElementById("request").innerHTML = request.responseText;
-    }};
-    request.open("POST", "application/add",newRecord);
-    request.send();   
+            alert("ok!");
+            //document.getElementById("request").innerHTML = request.responseText;
+        }
+    };
+    request.open("POST", "appointment/add",newRecord);
+    request.send();   
 }

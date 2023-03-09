@@ -1,7 +1,7 @@
 //Initialize with a default page
 function init(){
-    displayPage("login");
-    history.replaceState({}, 'Login', '#login');
+    displayPage("home");
+    history.replaceState({}, 'Home', '#home');
     window.addEventListener('popstate', poppin);
 }
 
@@ -25,14 +25,14 @@ function displayPage(pageId){
     })
 
     switch(pageId){
-        case "application":
+        case "home":
+            initHome();
+            break;
+        case "appointment":
             initApp();
             break;
-        case "login":
-            initLogin();
-            break;
-        case "register":
-            initRegister(); 
+        case "search":
+            initSearch(); 
     }
 }
 
@@ -45,24 +45,57 @@ function poppin(){
 
 //Add event listeners to the buttons of Application
 function initApp(){
-    let seeAllButton= document.getElementById("seeAll");
-    let seeRecordButton= document.getElementById("seeRecord");
-    let addButton= document.getElementById("add");
-    seeAllButton.addEventListener("click",seeAll);
-    seeRecordButton.addEventListener("click",seeRecord);
-    addButton.addEventListener("click",newRecordInfo);
+   document.getElementById("cdate").setAttribute("min",Date.now.Date);
+    // let addSubbmit= document.getElementById("addMeating");
+
+    //addSubbmit.addEventListener("click",newRecordInfo);
+}
+
+function validateForm(){
+
+    if(checkPattern("cname") && checkPattern("cphone"))
+    {
+    //    checkDate();
+
+        newRecordInfo();
+
+    }
+    return false;
+}
+
+// function checkDate(){
+//     var today = new Date(Date.now());
+//     var cdate = document.getElementById("cdate").value;
+//     alert(today.to " today\n"+ cdate + " choose");
+// }
+
+function checkPattern(id){
+    var elem = document.getElementById(id);
+
+    var pattern = elem.getAttribute("pattern");
+    var re = new RegExp(pattern);
+    if (re.test(elem.value)) {
+        return true;
+    }
+    return false;
 }
 
 //Initialize the app
 document.addEventListener('DOMContentLoaded', init);
 
-//login and register- move to login.js
-// function initLogin(){
-//     let logInButton = document.getElementById("loginBtn")
-//     logInButton.addEventListener('click', login);
-// }
+// login and register- move to login.js
+function initHome(){
+    // let logInButton = document.getElementById("loginBtn")
+    // logInButton.addEventListener('click', login);
+}
 
-// function initRegister(){
-//     let registerButton = document.getElementById("registerBtn")
-//     registerButton.addEventListener('click', register);
-// }
+function initSearch(){
+    document.getElementById("searchnameB").addEventListener('click', searchName());
+    // let registerButton = document.getElementById("registerBtn")
+    // registerButton.addEventListener('click', register);
+}
+
+function searchName(){
+    let name = document.getElementById("search_name").value;
+    alert("hi! "+name+" gooooood!");
+}

@@ -52,7 +52,6 @@ class Database{
     }
 
     if(this.addUserData(userCheck.name,userCheck.password)){
-      //cleanInputs();
       sessionStorage.setItem("cuurentUser",username);
       return "true";
     }
