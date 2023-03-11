@@ -89,13 +89,20 @@ function initHome(){
     // logInButton.addEventListener('click', login);
 }
 
+//Initialize the search page
 function initSearch(){
-    document.getElementById("searchnameB").addEventListener('click', searchName());
-    // let registerButton = document.getElementById("registerBtn")
-    // registerButton.addEventListener('click', register);
+    document.getElementById("searchnameB").addEventListener('click', searchName);
+    document.getElementById("editBtn").addEventListener('click', editRecord);
+    document.getElementById("deleteBtn").addEventListener('click', deleteRecord);
+    recVisibility('hidden');
+    seeAll();
 }
 
+//Search record by name
 function searchName(){
     let name = document.getElementById("search_name").value;
-    alert("hi! "+name+" gooooood!");
+    if(name){
+        seeRecord(name);
+    }
+    document.getElementById("search_name").value="";
 }

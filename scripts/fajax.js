@@ -20,7 +20,7 @@ class FXMLHttpRequest{
 
     send(){
         this.network.send(this);
-        if (this.status>199 && this.status<400){
+        if (this.status===200 || this.status===404){
             this.onload();
         }
     }

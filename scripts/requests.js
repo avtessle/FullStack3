@@ -1,4 +1,5 @@
 var run_id=0;
+let observedRec;
 
 //Get data of the new record to add
 function newRecordInfo(){
@@ -16,24 +17,29 @@ function seeAll(){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-            alert("ok!");
-            //document.getElementById("request").innerHTML = request.responseText;
+            document.getElementById("allRecs").innerHTML=request.responseText;
     }};
     request.open("GET", "appointment/all");
     request.send();   
 }
 
 //See a specific record
-function seeRecord(){
-    let id=0;
+function seeRecord(name){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
+        let showRecText=document.getElementById("showRec");
         if (this.status == 200) {
-            alert("ok!");
-            //document.getElementById("request").innerHTML = request.responseText;    
+            recVisibility('visible');
+            showRecText.innerHTML = request.responseText;  
+            observedRec= request.responseText;
+            //let rec=JSON.parse(request.responseText); 
+        }
+        else{
+            alert("There is no matching appointment!");
+            recVisibility('hidden');
         }
     };
-    request.open("GET", `appointment/${id}`);
+    request.open("GET", `appointment/${name}`);
     request.send();
 }
 
@@ -43,9 +49,31 @@ function add(newRecord){
     request.onload= function() {
         if (this.status == 200) {
             alert("ok!");
-            //document.getElementById("request").innerHTML = request.responseText;
         }
     };
     request.open("POST", "appointment/add",newRecord);
-    request.send();   
+    request.send();
+}
+
+function editRecord(){
+    alert("deleted");
+}
+
+function deleteRecord(){
+    let request=new FXMLHttpRequest();    
+    request.onload= function() {
+        if (this.status == 200) {
+            alert("deleted!");
+            seeAll();
+            recVisibility('hidden');
+        }
+    };
+    request.open("DELETE", "appointment/delete",observedRec);
+    request.send();
+}
+
+function recVisibility(mode){
+    document.getElementById("showRec").style.visibility = mode;
+    document.getElementById("editBtn").style.visibility = mode;
+    document.getElementById("deleteBtn").style.visibility = mode;
 }

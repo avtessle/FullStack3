@@ -29,10 +29,10 @@ class Database{
       if(currentUser.name===userCheck.name){
         if(currentUser.password===userCheck.password){
           sessionStorage.setItem("cuurentUser",username);
-          return "true";
+          return true;
         }
         alert("wrong password");
-        return "false";
+        return false;
       }
     }
     alert("user name does not exist");
@@ -83,14 +83,14 @@ class Database{
   }
 
   //Get a specific record
-  getRecord(id){
+  getRecord(name){
     for (let record of this.apptArr){
       record=JSON.parse(record)
-      if(record.id==id){
+      if(record.name==name){
         return JSON.stringify(record);
       }
     }
-    return "No matching record was found"
+    return false;
   }
 
   //Add new record
@@ -98,5 +98,12 @@ class Database{
     this.apptArr.push(record);
     localStorage.setItem('appointments',JSON.stringify(this.apptArr));
     return "added!";
+  }
+
+  deleteRecord(record){
+    const index = this.apptArr.indexOf(record);
+    this.apptArr.splice(index, 1);
+    localStorage.setItem('appointments',JSON.stringify(this.apptArr));
+    return "deleted!";
   }
 }

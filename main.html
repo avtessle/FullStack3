@@ -58,7 +58,7 @@
     </template>
 
     <template id="search">
-      <div>
+      <div id="searchDiv">
         <h1>Search</h1>
         <ol>
           <li><a href="#" target="home" class="nav-link">HOME</a></li>
@@ -66,11 +66,17 @@
           <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
         </ol>
 
+        <h1 id="allRecs"></h1>
+
         <form>
           <label>Search by name: </label>
-          <input type="search" id="search_name"><br><br>
+          <input type="search" id="search_name" placeholder="write client name here" required><br><br>
           <button id="searchnameB">search</button>
         </form>
+
+        <h1 id="showRec"></h1>
+        <button id="editBtn">edit</button>
+        <button id="deleteBtn">delete</button>
 
       </div>
     </template>

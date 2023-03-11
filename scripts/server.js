@@ -8,9 +8,11 @@ class Server{
 
             case 'USER':
             if(type==="check"){
-                request.responseText= this.db.checkUser(request.body);
-            }else{
-                request.responseText= this.db.addUser(request.body);
+
+                //User was not found
+                if(!this.db.checkUser(request.body)){
+                    request.status=404;
+                }
             }
             break;
 
@@ -18,12 +20,21 @@ class Server{
                 if(type==="all"){
                     request.responseText= this.db.getAllRecords();
                 }else{
-                    request.responseText= this.db.getRecord(type);
+                    let response=this.db.getRecord(type);
+                    if(!response){
+                        request.status=404;
+                    }else{
+                        request.responseText=response;
+                    }
                 }
                 break;
 
             case 'POST':
                 request.responseText= this.db.addRecord(request.body);
+                break;
+
+            case 'DELETE':
+                this.db.deleteRecord(request.body);
                 break;
         }
     }
