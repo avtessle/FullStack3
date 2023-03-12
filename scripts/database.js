@@ -82,17 +82,51 @@ class Database{
     return JSON.stringify(this.apptArr);
   }
 
-  //Get a specific record
-  getRecord(name){
-    for (let record of this.apptArr){
-      record=JSON.parse(record)
-      if(record.name==name){
-        return JSON.stringify(record);
+  // //Get a specific record
+  // getRecord(name){
+  //   for (let record of this.apptArr){
+  //     record=JSON.parse(record)
+  //     if(record.name==name){
+  //       return JSON.stringify(record);
+  //     }
+  //   }
+  //   return false;
+  // }
+
+    //Get a specific record
+getRecord(type, value){
+  switch (type) {
+    case "name":
+      for (let record of this.apptArr){
+        record=JSON.parse(record)
+        if(record.name==value){
+          return JSON.stringify(record);
+        }
       }
-    }
-    return false;
+      break;
+    case "date":
+      for (let record of this.apptArr){
+        record=JSON.parse(record)
+        if(record.date==value){
+          return JSON.stringify(record);
+        }
+      }
+      break;
+    case "phone":
+      for (let record of this.apptArr){
+        record=JSON.parse(record)
+        if(record.phone==value){
+          return JSON.stringify(record);
+        }
+      }
+      break;
+    default:
+      break;
   }
 
+  return false;
+}
+  
   //Add new record
   addRecord(record){
     this.apptArr.push(record);

@@ -85,9 +85,20 @@ document.addEventListener('DOMContentLoaded', init);
 
 // login and register- move to login.js
 function initHome(){
-    // let logInButton = document.getElementById("loginBtn")
-    // logInButton.addEventListener('click', login);
+    getDate();
+    selectDay();
+    document.getElementById("today").addEventListener("change",selectDay);
+    // const showday = new Date("03-05-2023");
+    // //getWeek(showday);
+    // alert("week: "+showday.getDay()+"\nday: "+showday.getDate()+"\nfuuldate: "+showday.toDateString()+"\nhour: "+showday.toTimeString());
+    // // showday.addEventListener('onchange', login);
 }
+
+function selectDay(){
+  
+    let meeting= seeDateRecord(document.getElementById("today").value);
+}
+
 
 //Initialize the search page
 function initSearch(){
@@ -102,7 +113,36 @@ function initSearch(){
 function searchName(){
     let name = document.getElementById("search_name").value;
     if(name){
-        seeRecord(name);
+        seeNameRecord(name);
     }
     document.getElementById("search_name").value="";
 }
+
+
+// function getWeek(date){
+//     let myDate = new Date(date);
+//     return "hi";
+// }
+
+
+// Adam Beer July 23
+// from https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
+function getDate() {
+    var today = new Date(Date.now());
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+  
+    if(dd<10) {
+        dd = '0'+dd
+    } 
+  
+    if(mm<10) {
+        mm = '0'+mm
+    } 
+  
+    today = yyyy + '-' + mm + '-' + dd;
+    console.log(today);
+    document.getElementById("today").value = today;
+  }
+  
