@@ -4,6 +4,8 @@ class Server{
     getRequest(request){
         request.status=200;
         let type=request.url.split('/')[1];
+        let value=request.url.split('/')[2];
+        alert(type+"\n"+value);
         switch(request.method){
 
             case 'USER':
@@ -19,8 +21,18 @@ class Server{
             case 'GET':
                 if(type==="all"){
                     request.responseText= this.db.getAllRecords();
-                }else{
-                    let response=this.db.getRecord(type);
+                }else if(type=="name")
+                {
+                    let response=this.db.getRecord(type, value);
+                    if(!response){
+                        request.status=404;
+                    }else{
+                        request.responseText=response;
+                    }
+                }
+                else if(type=="date")
+                {
+                    let response=this.db.getRecord(type, value);
                     if(!response){
                         request.status=404;
                     }else{
