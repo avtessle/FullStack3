@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', init);
 
 // login and register- move to login.js
 function initHome(){
-    getDate();
+    setDeafultDate("today");
     selectDay();
     document.getElementById("today").addEventListener("change",selectDay);
     
@@ -93,7 +93,7 @@ function initHome(){
     
     // const showday = new Date("03-05-2023");
     // //getWeek(showday);
-    // alert("week: "+showday.getDay()+"\nday: "+showday.getDate()+"\nfuuldate: "+showday.toDateString()+"\nhour: "+showday.toTimeString());
+    // alert("week: "+showday.getDay()+"\nday: "+showday.setDeafultDate("today")+"\nfuuldate: "+showday.toDateString()+"\nhour: "+showday.toTimeString());
     // // showday.addEventListener('onchange', login);
 }
 
@@ -109,30 +109,29 @@ function initSearch(){
     document.getElementById("editBtn").addEventListener('click', editRecord);
     document.getElementById("deleteBtn").addEventListener('click', deleteRecord);
     recVisibility('hidden');
+    setDeafultDate("searchDate")
     seeAll();
 }
 
 //Search record by name
 function searchRec(){
     //let name = document.getElementById("search_name").value;
-    let date= document.getElementById("searchDate").value;;
-    let time= document.getElementById("searchTime").value;;
-    //if(date && time){
-        seeNameRecord(date,time);
-    //}
-    //document.getElementById("search_name").value="";
+    let date= document.getElementById("searchDate").value;
+    let time= document.getElementById("searchTime").value;
+    if(date && time){
+        seeRecord(date,time);
+    }
+    document.getElementById("searchTime").value="";
 }
-
 
 // function getWeek(date){
 //     let myDate = new Date(date);
 //     return "hi";
 // }
 
-
 // Adam Beer July 23
 // from https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
-function getDate() {
+function setDeafultDate(id) {
     var today = new Date(Date.now());
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
@@ -148,10 +147,8 @@ function getDate() {
   
     today = yyyy + '-' + mm + '-' + dd;
     console.log(today);
-    document.getElementById("today").value = today;
-  }
-
-
+    document.getElementById(id).value = today;
+}
   
 function createDailyTable(){
     
@@ -180,24 +177,6 @@ function createDailyTable(){
 
         rowTime.appendChild(myTime);
         myTable.appendChild(rowTime);
-    }
-
-}
-
-//Initialize the search page
-function initSearch(){
-    document.getElementById("searchnameB").addEventListener('click', searchName);
-    document.getElementById("editBtn").addEventListener('click', editRecord);
-    document.getElementById("deleteBtn").addEventListener('click', deleteRecord);
-    recVisibility('hidden');
-    seeAll();
-}
-
-//Search record by name
-function searchName(){
-    let name = document.getElementById("search_name").value;
-    if(name){
-        seeRecord(name);
     }
-    document.getElementById("search_name").value="";
+
 }
