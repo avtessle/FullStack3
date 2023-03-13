@@ -11,12 +11,10 @@ function signIn(){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-        if(request.responseText==="true"){
             console.log("user exists");
             cleanInputs();
             window.location.replace("./main.html");
-        }
-    }};
+        }};
     request.open("USER", "login/check",user);
     request.send();  
 }
@@ -28,12 +26,10 @@ function register(){
 
     let request=new FXMLHttpRequest();    
     request.onload= function() {
-        if (this.status == 200) {
-        if(request.responseText==="true"){
-            console.log("user added");
-            cleanInputs();
-            window.location.replace("./main.html");
-        }
+        if (this.status == 200) {  
+        console.log("user added");
+        cleanInputs();
+        window.location.replace("./main.html");   
     }};
     request.open("USER", "login/add",user);
     request.send(); 

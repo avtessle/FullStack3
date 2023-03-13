@@ -23,8 +23,30 @@ function seeAll(){
     request.send();   
 }
 
+// //See a specific record
+// function seeNameRecord(name){
+//     let request=new FXMLHttpRequest();    
+//     request.onload= function() {
+//         let showRecText=document.getElementById("showRec");
+//         if (this.status == 200) {
+//             recVisibility('visible');
+//             showRecText.innerHTML = request.responseText;  
+//             observedRec= request.responseText;
+//             //let rec=JSON.parse(request.responseText); 
+//         }
+//         else{
+//             alert("There is no matching appointment!");
+//             recVisibility('hidden');
+//         }
+//     };
+//     request.open("GET", `appointment/name/${name}`);
+//     request.send();
+// }
+
 //See a specific record
-function seeNameRecord(name){
+
+//See a specific record
+function seeRecord(date,time){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         let showRecText=document.getElementById("showRec");
@@ -39,11 +61,10 @@ function seeNameRecord(name){
             recVisibility('hidden');
         }
     };
-    request.open("GET", `appointment/name/${name}`);
+    request.open("GET", `appointment/single/${date}/${time}`);
     request.send();
 }
 
-//See a specific record
 function seeDateRecord(date){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
@@ -59,7 +80,7 @@ function seeDateRecord(date){
             // recVisibility('hidden');
         }
     };
-    request.open("GET", `appointment/date/${date}`);
+    request.open("GET", `appointment/multi/date/${date}`);
     request.send();
 }
 

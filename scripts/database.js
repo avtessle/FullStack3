@@ -1,18 +1,16 @@
 class Database{
 
   constructor(){
-    // localStorage.clear();
-    //the arrays as JavaScripts arrays
-    this.usersArr=this.initialize('all_users');
-    this.apptArr=this.initialize('appointments');
+    //localStorage.clear();
+    //the array as JavaScripts array
+    this.usersArr=this.initializeUsers();
   }
-
-  //Initialize the arrays
-  initialize(key){
-    let arr=localStorage.getItem(key);
+  
+  initializeUsers(){
+    let arr=localStorage.getItem("all_users");
     if(arr===null){
       arr = new Array();
-      localStorage.setItem(key,JSON.stringify(arr));
+      localStorage.setItem("all_users",JSON.stringify(arr));
     }else{
       arr=JSON.parse(arr);
     }
@@ -21,14 +19,11 @@ class Database{
 
   //Check if the user exists
   checkUser(user){
-    let userCheck=JSON.parse(user);
-
-    for (let currentUser of this.usersArr){
-      currentUser=JSON.parse(currentUser);
-
-      if(currentUser.name===userCheck.name){
-        if(currentUser.password===userCheck.password){
-          sessionStorage.setItem("cuurentUser",username);
+    user=JSON.parse(user);
+    for (let userCheck of this.usersArr){
+      if(userCheck.name===user.name){
+        if(userCheck.password===user.password){
+          sessionStorage.setItem("cuurentUser",JSON.stringify(userCheck));
           return true;
         }
         alert("wrong password");
@@ -36,31 +31,31 @@ class Database{
       }
     }
     alert("user name does not exist");
-    return "false";
+    return false;
   }
 
   //Add new user
   addUser(user){
-    let userCheck=JSON.parse(user);
-
-    for (let currentUser of this.usersArr){
-      currentUser=JSON.parse(currentUser);
-      if(currentUser.name===userCheck.name){
+    user=JSON.parse(user);
+    for (let userCheck of this.usersArr){
+      if(userCheck.name===user.name){
         alert("uesr name already exist!")
-        return "false";
+        return false;
       }
     }
 
-    if(this.addUserData(userCheck.name,userCheck.password)){
-      sessionStorage.setItem("cuurentUser",username);
-      return "true";
+    user.appointments=[];
+    if(this.addUserData(user)){
+      //this.apptArr=user.appointments;
+      sessionStorage.setItem("cuurentUser",JSON.stringify(user));
+      return true;
     }
   }
 
-  addUserData(userName, userPassword){
+  addUserData(user){
     //test username
     let tesRegex=  /^[A-Za-z]\w*$/;
-    if(!userName.match(tesRegex)) 
+    if(!user.name.match(tesRegex)) 
     { 
       alert("username must atart with a letter and contain only characters, digits and underscore");
       return false;
@@ -71,7 +66,6 @@ class Database{
     //   return false;
     // }
   
-    let user=JSON.stringify({name:userName, password:userPassword});
     this.usersArr.push(user);
     localStorage.setItem('all_users',JSON.stringify(this.usersArr));
     return true;
@@ -79,65 +73,84 @@ class Database{
 
   //Get all the records
   getAllRecords(){
-    return JSON.stringify(this.apptArr);
+    let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+    return JSON.stringify(apptArr);
   }
 
-  // //Get a specific record
-  // getRecord(name){
-  //   for (let record of this.apptArr){
-  //     record=JSON.parse(record)
-  //     if(record.name==name){
-  //       return JSON.stringify(record);
-  //     }
-  //   }
-  //   return false;
-  // }
-
-    //Get a specific record
-getRecord(type, value){
-  switch (type) {
-    case "name":
-      for (let record of this.apptArr){
-        record=JSON.parse(record)
-        if(record.name==value){
-          return JSON.stringify(record);
-        }
+  //Get a specific record
+  getRecord(date,time){
+    let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+    for (let record of apptArr){
+      record=JSON.parse(record)
+      if(record.date==date && record.time===time){
+        return JSON.stringify(record);
       }
-      break;
-    case "date":
-      for (let record of this.apptArr){
-        record=JSON.parse(record)
-        if(record.date==value){
-          return JSON.stringify(record);
-        }
-      }
-      break;
-    case "phone":
-      for (let record of this.apptArr){
-        record=JSON.parse(record)
-        if(record.phone==value){
-          return JSON.stringify(record);
-        }
-      }
-      break;
-    default:
-      break;
+    }
+      return false;
   }
 
-  return false;
-}
-  
+  getRecords(type, value){
+    let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+    switch (type) {
+      case "name":
+        for (let record of apptArr){
+          record=JSON.parse(record)
+          if(record.name==value){
+            return JSON.stringify(record);
+          }
+        }
+        break;
+      case "date":
+        for (let record of apptArr){
+          record=JSON.parse(record)
+          if(record.date==value){
+            return JSON.stringify(record);
+          }
+        }
+        break;
+      case "phone":
+        for (let record of apptArr){
+          record=JSON.parse(record)
+          if(record.phone==value){
+            return JSON.stringify(record);
+          }
+        }
+        break;
+      default:
+        break;
+      }
+    
+    return false;
+  }
+
   //Add new record
   addRecord(record){
-    this.apptArr.push(record);
-    localStorage.setItem('appointments',JSON.stringify(this.apptArr));
-    return "added!";
+    let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+    apptArr.push(record);
+
+    this.updateStorage(apptArr);
+    return true;
   }
 
   deleteRecord(record){
-    const index = this.apptArr.indexOf(record);
-    this.apptArr.splice(index, 1);
-    localStorage.setItem('appointments',JSON.stringify(this.apptArr));
-    return "deleted!";
+    let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+    const index = apptArr.indexOf(record);
+    apptArr.splice(index, 1);
+    this.updateStorage(apptArr);
+    return true;
+  }
+
+  updateStorage(apptArr){
+    //Update currentUser appointments
+    let currentUser=JSON.parse(sessionStorage.getItem("cuurentUser"));
+    let index=this.usersArr.findIndex(x => x.name === currentUser.name && x.password === currentUser.password);
+    currentUser["appointments"]=apptArr;
+
+    //Update sessionStorage
+    sessionStorage.setItem("cuurentUser",JSON.stringify(currentUser));
+
+    //Update users array (localStorage)
+    this.usersArr[index]=currentUser;
+    localStorage.setItem('all_users',JSON.stringify(this.usersArr));
   }
 }

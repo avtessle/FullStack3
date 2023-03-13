@@ -88,6 +88,9 @@ function initHome(){
     getDate();
     selectDay();
     document.getElementById("today").addEventListener("change",selectDay);
+    
+    
+    
     // const showday = new Date("03-05-2023");
     // //getWeek(showday);
     // alert("week: "+showday.getDay()+"\nday: "+showday.getDate()+"\nfuuldate: "+showday.toDateString()+"\nhour: "+showday.toTimeString());
@@ -95,7 +98,7 @@ function initHome(){
 }
 
 function selectDay(){
-  
+    createDailyTable();
     let meeting= seeDateRecord(document.getElementById("today").value);
 }
 
@@ -145,4 +148,54 @@ function getDate() {
     console.log(today);
     document.getElementById("today").value = today;
   }
+
+
   
+function createDailyTable(){
+    
+    let myTable = document.getElementById("myDayTable");
+    myTable.innerHTML='';
+    let header = document.createElement('tr');
+    
+    header.appendChild(document.createElement('th')); 
+    let name = document.createElement('th');
+    name.innerHTML = "name";
+   // neme.style.width='200px';
+    let phone = document.createElement('th');
+    phone.innerHTML = "phone";
+    //phone.style.width='200px';
+    
+    header.appendChild(name);
+    header.appendChild(phone);
+
+    myTable.appendChild(header);
+
+    for(let time = 9; time<21; time++){
+        let rowTime = document.createElement('tr');
+        let myTime = document.createElement('th');
+        rowTime.id = time+":00";
+        myTime.innerHTML= time+":00";
+
+        rowTime.appendChild(myTime);
+        myTable.appendChild(rowTime);
+    }
+
+}
+
+//Initialize the search page
+function initSearch(){
+    document.getElementById("searchnameB").addEventListener('click', searchName);
+    document.getElementById("editBtn").addEventListener('click', editRecord);
+    document.getElementById("deleteBtn").addEventListener('click', deleteRecord);
+    recVisibility('hidden');
+    seeAll();
+}
+
+//Search record by name
+function searchName(){
+    let name = document.getElementById("search_name").value;
+    if(name){
+        seeRecord(name);
+    }
+    document.getElementById("search_name").value="";
+}
