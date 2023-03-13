@@ -44,8 +44,6 @@ function seeAll(){
 // }
 
 //See a specific record
-
-//See a specific record
 function seeRecord(date,time){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
@@ -89,7 +87,7 @@ function add(newRecord){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-            alert("ok!");
+            alert("appointment added!");
         }
     };
     request.open("POST", "appointment/add",newRecord);
@@ -97,7 +95,7 @@ function add(newRecord){
 }
 
 function editRecord(){
-    alert("deleted");
+    alert("appointment deleted");
 }
 
 function deleteRecord(){

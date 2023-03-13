@@ -126,8 +126,28 @@
         <h1 id="allRecs"></h1>
 
         <form>
-          <label>Search by name: </label>
-          <input type="search" id="search_name" placeholder="write client name here" required><br><br>
+          <!-- <label>Search by name: </label>
+          <input type="search" id="search_date" placeholder="date" required>
+          <input type="search" id="search_our" placeholder="hour" required> -->
+          <label>Date: </label>
+          <input type="date" id="searchDate" required><br><br>
+          <label>Time: </label> 
+          <input list="hours" id="searchTime" appearance="date" required>
+            <datalist id="hours">
+              <option value="08:00">
+              <option value="09:00">
+              <option value="10:00">
+              <option value="11:00">
+              <option value="12:00">
+              <option value="13:00">
+              <option value="14:00">
+              <option value="15:00">
+              <option value="16:00">
+              <option value="17:00">
+              <option value="18:00">
+              <option value="19:00">
+              <option value="20:00">
+            </datalist><br><br>
           <button id="searchnameB">search</button>
         </form>
 

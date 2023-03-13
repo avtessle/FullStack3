@@ -105,7 +105,7 @@ function selectDay(){
 
 //Initialize the search page
 function initSearch(){
-    document.getElementById("searchnameB").addEventListener('click', searchName);
+    document.getElementById("searchnameB").addEventListener('click', searchRec);
     document.getElementById("editBtn").addEventListener('click', editRecord);
     document.getElementById("deleteBtn").addEventListener('click', deleteRecord);
     recVisibility('hidden');
@@ -113,12 +113,14 @@ function initSearch(){
 }
 
 //Search record by name
-function searchName(){
-    let name = document.getElementById("search_name").value;
-    if(name){
-        seeNameRecord(name);
-    }
-    document.getElementById("search_name").value="";
+function searchRec(){
+    //let name = document.getElementById("search_name").value;
+    let date= document.getElementById("searchDate").value;;
+    let time= document.getElementById("searchTime").value;;
+    //if(date && time){
+        seeNameRecord(date,time);
+    //}
+    //document.getElementById("search_name").value="";
 }
 
 

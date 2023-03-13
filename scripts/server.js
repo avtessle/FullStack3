@@ -5,7 +5,7 @@ class Server{
         request.status=200;
         let type=request.url.split('/')[1];
         let value=request.url.split('/')[2];
-        alert(type+"\n"+value);
+        //alert(type+"\n"+value);
         switch(request.method){
 
             case 'USER':
