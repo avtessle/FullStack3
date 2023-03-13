@@ -33,7 +33,31 @@ class Server{
                         }
                         break;
                     case 'multi':
-                        //request.responseText= this.db.getRecords();
+                        let list =this.db.getRecords(request.url.split('/')[2],request.url.split('/')[3]);
+                        if(!list){
+                            request.status=404;
+                        }else{
+                            request.responseText=list;
+                        }
+                        break;
+                //         else if(type=="name")
+                // {
+                //     let response=this.db.getRecord(type, value);
+                //     if(!response){
+                //         request.status=404;
+                //     }else{
+                //         request.responseText=response;
+                //     }
+                // }
+                // else if(type=="date")
+                // {
+                //     let response=this.db.getRecord(type, value);
+                //     if(!response){
+                //         request.status=404;
+                //     }else{
+                //         request.responseText=response;
+                //     }
+                // }
                         break;
                 }
                 break;

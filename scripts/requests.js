@@ -119,16 +119,19 @@ function recVisibility(mode){
     document.getElementById("deleteBtn").style.visibility = mode;
 }
 
-function insertMeet(meeting){
-    alert("hi"+meeting);
-    meeting =JSON.parse(meeting);
-    let hour = document.getElementById(meeting.time);
-    let name = document.createElement('td');
-    let phone = document.createElement('td');
-    name.innerHTML = meeting.name;
-    phone.innerHTML = meeting.phone;
-    name.classList.add("newData");
-    phone.classList.add("newData");
-    hour.appendChild(name);
-    hour.appendChild(phone);
+function insertMeet(myMeets){
+    // alert("hi"+meeting);
+    myMeets =JSON.parse(myMeets);
+    myMeets.forEach(meet => {
+        let hour = document.getElementById(meet.time);
+        let name = document.createElement('td');
+        let phone = document.createElement('td');
+        name.innerHTML = meet.name;
+        phone.innerHTML = meet.phone;
+        name.classList.add("newData");
+        phone.classList.add("newData");
+        hour.appendChild(name);
+        hour.appendChild(phone);
+    });
+   
 }

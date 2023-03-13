@@ -91,36 +91,44 @@ class Database{
 
   getRecords(type, value){
     let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
-    switch (type) {
-      case "name":
-        for (let record of apptArr){
-          record=JSON.parse(record)
-          if(record.name==value){
-            return JSON.stringify(record);
-          }
-        }
-        break;
-      case "date":
-        for (let record of apptArr){
-          record=JSON.parse(record)
-          if(record.date==value){
-            return JSON.stringify(record);
-          }
-        }
-        break;
-      case "phone":
-        for (let record of apptArr){
-          record=JSON.parse(record)
-          if(record.phone==value){
-            return JSON.stringify(record);
-          }
-        }
-        break;
-      default:
-        break;
+    let myList = []; 
+    for (let record of apptArr){
+      record=JSON.parse(record)
+      if(record[type]==value){
+        myList.push(record);
       }
+    }
+    return JSON.stringify(myList);
+    // switch (type) {
+    //   case "name":
+    //     for (let record of apptArr){
+    //       record=JSON.parse(record)
+    //       if(record.name==value){
+    //         return JSON.stringify(record);
+    //       }
+    //     }
+    //     break;
+    //   case "date":
+    //     for (let record of apptArr){
+    //       record=JSON.parse(record)
+    //       if(record.date==value){
+    //         return JSON.stringify(record);
+    //       }
+    //     }
+    //     break;
+    //   case "phone":
+    //     for (let record of apptArr){
+    //       record=JSON.parse(record)
+    //       if(record.phone==value){
+    //         return JSON.stringify(record);
+    //       }
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    //   }
     
-    return false;
+    //return false;
   }
 
   //Add new record
