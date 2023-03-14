@@ -1,18 +1,7 @@
 var run_id=0;
 let observedRec;
 
-//Get data of the new record to add
-function newRecordInfo(){
-    let cName = document.getElementById("cname").value;
-    let cPhone = document.getElementById("cphone").value;
-    let cDate = document.getElementById("cdate").value;
-    let cTime = document.getElementById("ctime").value;
-
-    let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
-    add(JSON.stringify(record));
-}
-
-//See all the records
+//See all the records- request
 function seeAll(){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
@@ -33,7 +22,7 @@ function seeRecord(date,time){
             displayRec();
         }
         else{
-            alert("There is no matching appointment!");
+            alert("No matching appointment");
             removeRecDisplay();
         }
     };
@@ -41,6 +30,7 @@ function seeRecord(date,time){
     request.send();
 }
 
+//Get all record by date - request
 function getRecordsByDate(date){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
@@ -48,20 +38,22 @@ function getRecordsByDate(date){
             insertMeet(request.responseText);
         }
         else{
-            alert("There is no matching appointment!");
+            alert("No matching appointment");
+            //recVisibility('hidden');
         }
     };
     request.open("GET", `appointment/multi/date/${date}`);
     request.send();
 }
 
-//Add a record
+//Add a record- request
 function add(newRecord){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
             alert("appointment added!");
-        } else if(this.status == 422){
+        } else if(this.status == 422)
+        {
             alert("It is not possible to make the appointment at the chosen time. Choose another date.");
         }
     }
@@ -69,120 +61,47 @@ function add(newRecord){
     request.send();
 }
 
+//Edit the record- request
+function editRecord(evt){
+    let updatedRec=evt.currentTarget.param;
+
+    let request=new FXMLHttpRequest();    
+    request.onload= function() {;
+        if (this.status == 200) {
+            observedRec=updatedRec;
+            alert('Appointment details have been successfully updated');
+            seeAll();
+        }
+    };
+    request.open("PUT", `appointment/update/${observedRec.date}/${observedRec.time}`,JSON.stringify(updatedRec));
+    request.send();
+}
+
+//Delete the record- request
 function deleteRecord(){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-            alert("deleted!");
+            alert("Appointment was successfully deleted");
             seeAll();
-            recVisibility('hidden');
+            removeRecDisplay();
         }
     };
     request.open("DELETE", "appointment/delete",observedRec);
     request.send();
 }
 
-//Display record data
-function displayRec(){
+//-------------------------------------------------------------
 
-    let table = document.createElement('table');
-    table.id = 'recTable';
+//Get data of the new record to add
+function newRecordInfo(){
+    let cName = document.getElementById("cname").value;
+    let cPhone = document.getElementById("cphone").value;
+    let cDate = document.getElementById("cdate").value;
+    let cTime = document.getElementById("ctime").value;
 
-    // Loop through the record properties and create a row for each one
-    for (let key in observedRec) {
-        let row = document.createElement('tr');
-
-        // Create a cell for the property name
-        let nameCell = document.createElement('td');
-        nameCell.innerText = key;
-        row.appendChild(nameCell);
-
-        // Create a cell for the property value
-        let valueCell = document.createElement('td');
-        valueCell.innerText = observedRec[key];
-
-        row.appendChild(valueCell);
-        table.appendChild(row);
-    }
-    document.getElementById("searchDiv").appendChild(table);
-
-    createBtn("editBtn","edit",editRecord);
-    createBtn("deleteBtn","delete",deleteRecord);
-}
-
-function createBtn(id, text,eventListener){
-    button = document.createElement("button");
-    button.innerText = text;
-    button.setAttribute("type", "button");
-    button.setAttribute("id", id);
-    document.getElementById("searchDiv").appendChild(button);
-    button.addEventListener('click',eventListener);
-}
-
-//Remove record data
-function removeRecDisplay(){
-    if(observedRec){
-        let elements=[document.getElementById("recTable"),
-        document.getElementById("editBtn"),
-        document.getElementById("deleteBtn"),
-        document.getElementById("submitEditBtn")]
-        for (let i in elements) {
-            if(elements[i]){
-                elements[i].remove();
-            }
-        }
-    }
-}
-
-function editRecord(){
-    let table=document.getElementById("recTable");
-    let cells = table.getElementsByTagName('td');
-    for (let i = 1; i < cells.length; i+=2) {
-        cells[i].addEventListener('click', editCell);
-        cells[i].classList.add('editable');
-    }
-
-    // Create a submit button
-    createBtn("submitEditBtn","submit changes",submitChanges);
-    document.getElementById("editBtn").remove();
-    document.getElementById("deleteBtn").remove();
-}
-
-function editCell(event) {
-    // Get the current value of the cell
-    let currentValue = event.target.innerHTML;
-
-    // Replace the cell content with an input field
-    event.target.innerHTML = `<input type="text" value="${currentValue}">`;
-
-    // Focus on the input field and select its content
-    let input = event.target.getElementsByTagName('input')[0];
-    input.focus();
-    input.select();
-
-    // Add an event listener to the input field
-    //Get the new value from the input field and replace the input field with the new value
-    input.addEventListener('blur', function(event){
-        let newValue = event.target.value;
-        event.target.parentNode.innerHTML = newValue;
-    });
-}
-
-// function inputBlur(event) {
-//     // Get the new value from the input field
-//     let newValue = event.target.value;
-
-//     // Replace the input field with the new value
-//     event.target.parentNode.innerHTML = newValue;
-// }
-
-function submitChanges(){
-}
-
-function recVisibility(mode){
-    document.getElementById("showRec").style.visibility = mode;
-    document.getElementById("editBtn").style.visibility = mode;
-    document.getElementById("deleteBtn").style.visibility = mode;
+    let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
+    add(JSON.stringify(record));
 }
 
 function insertMeet(myMeets){
@@ -197,4 +116,66 @@ function insertMeet(myMeets){
         (hourRow.childNodes[2]).appendChild(phone);
     });
    
+}
+
+//Display record data
+function displayRec(){
+
+    let table = document.createElement('table');
+    table.id = 'recTable';
+
+    // Create the table rows with editable cells for each property of the record
+    for (let prop in observedRec) {
+        if (observedRec.hasOwnProperty(prop)) {
+            let row = table.insertRow();
+            let labelCell = row.insertCell();
+            let valueCell = row.insertCell();
+            labelCell.innerText = prop;
+            valueCell.contentEditable = true;
+            valueCell.setAttribute("data-property", prop);
+            valueCell.innerText = observedRec[prop];
+
+            // EvenetListener for all the cells- save the new input
+            valueCell.addEventListener("blur", function(event) {
+                let cell = event.target;
+                let property = cell.getAttribute("data-property");
+                if (property) {
+                    updatedRec[property] = cell.innerText;
+                }
+            });
+        }
+    }
+
+    document.getElementById("searchDiv").appendChild(table);
+
+    let updatedRec=observedRec;
+    createBtn("deleteBtn","delete",deleteRecord);
+    let editBtn=createBtn("editBtn","edit",editRecord);
+    editBtn.param=updatedRec;
+}
+
+//Create buuton and add it to the DOM
+function createBtn(id, text,eventListener){
+    button = document.createElement("button");
+    button.innerText = text;
+    button.setAttribute("type", "button");
+    button.setAttribute("id", id);
+    document.getElementById("searchDiv").appendChild(button);
+    button.addEventListener('click',eventListener);
+    return button;
+}
+
+//Remove record data from the page
+function removeRecDisplay(){
+    if(observedRec){
+        let elements=[document.getElementById("recTable"),
+        document.getElementById("editBtn"),
+        document.getElementById("deleteBtn"),
+        document.getElementById("submitEditBtn")]
+        for (let i in elements) {
+            if(elements[i]){
+                elements[i].remove();
+            }
+        }
+    }
 }

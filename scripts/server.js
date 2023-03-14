@@ -4,8 +4,8 @@ class Server{
     getRequest(request){
         request.status=200;
         let type=request.url.split('/')[1];
-        let value=request.url.split('/')[2];
-        //alert(type+"\n"+value);
+        let value1=request.url.split('/')[2];
+        let value2=request.url.split('/')[3];
         switch(request.method){
 
             case 'USER':
@@ -25,7 +25,7 @@ class Server{
                         request.responseText= this.db.getAllRecords();
                         break;
                     case 'single':
-                        let response=this.db.getRecord(request.url.split('/')[2],request.url.split('/')[3]);
+                        let response=this.db.getRecord(value1,value2);
                         if(!response){
                             request.status=404;
                         }else{
@@ -33,7 +33,7 @@ class Server{
                         }
                         break;
                     case 'multi':
-                        let list =this.db.getRecords(request.url.split('/')[2],request.url.split('/')[3]);
+                        let list =this.db.getRecords(value1,value2);
                         if(!list){
                             request.status=404;
                         }else{
@@ -55,6 +55,12 @@ class Server{
                     request.status=404; 
                 }
                 break;
+
+            case 'PUT':
+            if(!this.db.editRecord(value1, value2, request.body)){
+                request.status=404; 
+            }
+              break;
         }
     }
 }

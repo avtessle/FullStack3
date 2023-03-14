@@ -1,8 +1,6 @@
 class Database{
 
   constructor(){
-    //localStorage.clear();
-    //the array as JavaScripts array
     this.usersArr=this.initializeUsers();
   }
   
@@ -123,6 +121,20 @@ class Database{
     return true;
   }
 
+  editRecord(date, time,updatedRecord){
+    let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+    let currentAppt;
+    for (let i = 0; i < apptArr.length; i++) {
+      currentAppt=JSON.parse(apptArr[i]);
+      if(currentAppt.date===date && currentAppt.time===time){
+        //check if the appt is taken!!!!!!!!!
+        apptArr[i]=updatedRecord;
+        this.updateStorage(apptArr);
+        return true;
+      }
+    }
+  }
+
   updateStorage(apptArr){
     //Update currentUser appointments
     let currentUser=JSON.parse(sessionStorage.getItem("cuurentUser"));
@@ -136,4 +148,6 @@ class Database{
     this.usersArr[index]=currentUser;
     localStorage.setItem('all_users',JSON.stringify(this.usersArr));
   }
+
+
 }

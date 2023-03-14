@@ -116,18 +116,3 @@ img {
     color: rgb(64, 25, 191);
 }
 
-
-td.editable {
-    border: 1px solid black;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-  td.editable:hover {
-    background-color: lightgray;
-  }
-  
-  td.editable:focus {
-    border: 2px solid blue;
-    outline: none;
-  }

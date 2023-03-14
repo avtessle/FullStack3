@@ -56,11 +56,7 @@
       <template id="appointment">
         <div>
           <h1>Appointment</h1>
-          <!-- <ol>
-            <li><a href="#" target="home" class="nav-link">HOME</a></li>
-            <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
-            <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
-          </ol> -->
+   
           <!-- add new appearance -->
           <form id="newAppointment" onsubmit="validateForm()">
             <label class="clientInfo">Name: </label>
@@ -91,49 +87,36 @@
         </div>
       </template>
 
-      <template id="search">
-        <div id="searchDiv">
-          <h1>Search</h1>
-          <!-- <ol>
-            <li><a href="#" target="home" class="nav-link">HOME</a></li>
-            <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
-            <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
-          </ol> -->
+  <template id="search">
+    <div id="searchDiv">
+      <h1>Search</h1>
+      <h1 id="allRecs"></h1>
 
-          <h1 id="allRecs"></h1>
+      <form>
+        <label>Date: </label>
+        <input type="date" id="searchDate"><br><br>
+        <label>Time: </label> 
+        <input list="hours" id="searchTime" appearance="date" required>
+          <datalist id="hours">
+            <option value="08:00">
+            <option value="09:00">
+            <option value="10:00">
+            <option value="11:00">
+            <option value="12:00">
+            <option value="13:00">
+            <option value="14:00">
+            <option value="15:00">
+            <option value="16:00">
+            <option value="17:00">
+            <option value="18:00">
+            <option value="19:00">
+            <option value="20:00">
+          </datalist><br><br>
+        <button id="searchnameB">search</button>
+      </form>
 
-          <form>
-            <!-- <label>Search by name: </label>
-            <input type="search" id="search_date" placeholder="date" required>
-            <input type="search" id="search_our" placeholder="hour" required> -->
-            <label>Date: </label>
-            <input type="date" id="searchDate" required><br><br>
-            <label>Time: </label> 
-            <input list="hours" id="searchTime" appearance="date" required>
-              <datalist id="hours">
-                <option value="08:00">
-                <option value="09:00">
-                <option value="10:00">
-                <option value="11:00">
-                <option value="12:00">
-                <option value="13:00">
-                <option value="14:00">
-                <option value="15:00">
-                <option value="16:00">
-                <option value="17:00">
-                <option value="18:00">
-                <option value="19:00">
-                <option value="20:00">
-              </datalist><br><br>
-            <button id="searchnameB">search</button>
-          </form>
-
-        <h1 id="showRec"></h1>
-        <button id="editBtn">edit</button>
-        <button id="deleteBtn">delete</button>
-
-        </div>
-      </template>
+    </div>
+    </template>
 
     <!-- base on code from: 
       https://www.csscodelab.com/html-footer-example-source-code/ -->
