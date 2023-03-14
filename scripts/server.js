@@ -57,10 +57,10 @@ class Server{
                 break;
 
             case 'PUT':
-            if(!this.db.editRecord(value1, value2, request.body)){
-                request.status=404; 
-            }
-              break;
+                if(!this.db.editRecord(value1, value2, request.body)){
+                    request.status=404; 
+                }
+                break;
         }
     }
 }
