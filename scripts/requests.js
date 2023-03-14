@@ -7,10 +7,9 @@ function newRecordInfo(){
     let cPhone = document.getElementById("cphone").value;
     let cDate = document.getElementById("cdate").value;
     let cTime = document.getElementById("ctime").value;
-    //date in past
+
     let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
     add(JSON.stringify(record));
-
 }
 
 //See all the records
@@ -24,42 +23,32 @@ function seeAll(){
     request.send();   
 }
 
-
-//See a specific record
+//See a specific record- request
 function seeRecord(date,time){
     let request=new FXMLHttpRequest();    
-    request.onload= function() {
-        let showRecText=document.getElementById("showRec");
+    request.onload= function() {;
         if (this.status == 200) {
-            recVisibility('visible');
-            showRecText.innerHTML = request.responseText;  
-            observedRec= request.responseText;
-            //let rec=JSON.parse(request.responseText); 
+            removeRecDisplay();
+            observedRec= JSON.parse(request.responseText);
+            displayRec();
         }
         else{
             alert("There is no matching appointment!");
-            recVisibility('hidden');
+            removeRecDisplay();
         }
     };
     request.open("GET", `appointment/single/${date}/${time}`);
     request.send();
 }
 
-
-
 function getRecordsByDate(date){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
-        // let showRecText=document.getElementById("mydate");
         if (this.status == 200) {
-            // showRecText.innerHTML = request.responseText;  
-            // observedRec= request.responseText;
             insertMeet(request.responseText);
-
         }
         else{
             alert("There is no matching appointment!");
-            // recVisibility('hidden');
         }
     };
     request.open("GET", `appointment/multi/date/${date}`);
@@ -72,17 +61,12 @@ function add(newRecord){
     request.onload= function() {
         if (this.status == 200) {
             alert("appointment added!");
-        }
-        else if(this.status == 422){
+        } else if(this.status == 422){
             alert("It is not possible to make the appointment at the chosen time. Choose another date.");
         }
-    };
+    }
     request.open("POST", "appointment/add",newRecord);
     request.send();
-}
-
-function editRecord(){
-    alert("appointment deleted");
 }
 
 function deleteRecord(){
@@ -96,6 +80,103 @@ function deleteRecord(){
     };
     request.open("DELETE", "appointment/delete",observedRec);
     request.send();
+}
+
+//Display record data
+function displayRec(){
+
+    let table = document.createElement('table');
+    table.id = 'recTable';
+
+    // Loop through the record properties and create a row for each one
+    for (let key in observedRec) {
+        let row = document.createElement('tr');
+
+        // Create a cell for the property name
+        let nameCell = document.createElement('td');
+        nameCell.innerText = key;
+        row.appendChild(nameCell);
+
+        // Create a cell for the property value
+        let valueCell = document.createElement('td');
+        valueCell.innerText = observedRec[key];
+
+        row.appendChild(valueCell);
+        table.appendChild(row);
+    }
+    document.getElementById("searchDiv").appendChild(table);
+
+    createBtn("editBtn","edit",editRecord);
+    createBtn("deleteBtn","delete",deleteRecord);
+}
+
+function createBtn(id, text,eventListener){
+    button = document.createElement("button");
+    button.innerText = text;
+    button.setAttribute("type", "button");
+    button.setAttribute("id", id);
+    document.getElementById("searchDiv").appendChild(button);
+    button.addEventListener('click',eventListener);
+}
+
+//Remove record data
+function removeRecDisplay(){
+    if(observedRec){
+        let elements=[document.getElementById("recTable"),
+        document.getElementById("editBtn"),
+        document.getElementById("deleteBtn"),
+        document.getElementById("submitEditBtn")]
+        for (let i in elements) {
+            if(elements[i]){
+                elements[i].remove();
+            }
+        }
+    }
+}
+
+function editRecord(){
+    let table=document.getElementById("recTable");
+    let cells = table.getElementsByTagName('td');
+    for (let i = 1; i < cells.length; i+=2) {
+        cells[i].addEventListener('click', editCell);
+        cells[i].classList.add('editable');
+    }
+
+    // Create a submit button
+    createBtn("submitEditBtn","submit changes",submitChanges);
+    document.getElementById("editBtn").remove();
+    document.getElementById("deleteBtn").remove();
+}
+
+function editCell(event) {
+    // Get the current value of the cell
+    let currentValue = event.target.innerHTML;
+
+    // Replace the cell content with an input field
+    event.target.innerHTML = `<input type="text" value="${currentValue}">`;
+
+    // Focus on the input field and select its content
+    let input = event.target.getElementsByTagName('input')[0];
+    input.focus();
+    input.select();
+
+    // Add an event listener to the input field
+    //Get the new value from the input field and replace the input field with the new value
+    input.addEventListener('blur', function(event){
+        let newValue = event.target.value;
+        event.target.parentNode.innerHTML = newValue;
+    });
+}
+
+// function inputBlur(event) {
+//     // Get the new value from the input field
+//     let newValue = event.target.value;
+
+//     // Replace the input field with the new value
+//     event.target.parentNode.innerHTML = newValue;
+// }
+
+function submitChanges(){
 }
 
 function recVisibility(mode){
