@@ -106,10 +106,7 @@ function selectDay(){
 //Initialize the search page
 function initSearch(){
     document.getElementById("searchnameB").addEventListener('click', searchRec);
-    document.getElementById("editBtn").addEventListener('click', editRecord);
-    document.getElementById("deleteBtn").addEventListener('click', deleteRecord);
-    recVisibility('hidden');
-    setDeafultDate("searchDate")
+    setDeafultDate("searchDate");
     seeAll();
 }
 
