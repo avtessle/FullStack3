@@ -7,9 +7,10 @@ function newRecordInfo(){
     let cPhone = document.getElementById("cphone").value;
     let cDate = document.getElementById("cdate").value;
     let cTime = document.getElementById("ctime").value;
-
+    //date in past
     let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
     add(JSON.stringify(record));
+
 }
 
 //See all the records
@@ -23,25 +24,6 @@ function seeAll(){
     request.send();   
 }
 
-// //See a specific record
-// function seeNameRecord(name){
-//     let request=new FXMLHttpRequest();    
-//     request.onload= function() {
-//         let showRecText=document.getElementById("showRec");
-//         if (this.status == 200) {
-//             recVisibility('visible');
-//             showRecText.innerHTML = request.responseText;  
-//             observedRec= request.responseText;
-//             //let rec=JSON.parse(request.responseText); 
-//         }
-//         else{
-//             alert("There is no matching appointment!");
-//             recVisibility('hidden');
-//         }
-//     };
-//     request.open("GET", `appointment/name/${name}`);
-//     request.send();
-// }
 
 //See a specific record
 function seeRecord(date,time){
@@ -63,7 +45,9 @@ function seeRecord(date,time){
     request.send();
 }
 
-function seeDateRecord(date){
+
+
+function getRecordsByDate(date){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         // let showRecText=document.getElementById("mydate");
@@ -88,6 +72,9 @@ function add(newRecord){
     request.onload= function() {
         if (this.status == 200) {
             alert("appointment added!");
+        }
+        else if(this.status == 422){
+            alert("It is not possible to make the appointment at the chosen time. Choose another date.");
         }
     };
     request.open("POST", "appointment/add",newRecord);
@@ -118,18 +105,15 @@ function recVisibility(mode){
 }
 
 function insertMeet(myMeets){
-    // alert("hi"+meeting);
+
     myMeets =JSON.parse(myMeets);
     myMeets.forEach(meet => {
-        let hour = document.getElementById(meet.time);
-        let name = document.createElement('td');
-        let phone = document.createElement('td');
-        name.innerHTML = meet.name;
-        phone.innerHTML = meet.phone;
-        name.classList.add("newData");
-        phone.classList.add("newData");
-        hour.appendChild(name);
-        hour.appendChild(phone);
+        let hourRow = document.getElementById(meet.time);
+        let name = document.createTextNode(meet.name);
+        let phone = document.createTextNode(meet.phone);
+
+        (hourRow.childNodes[1]).appendChild(name);
+        (hourRow.childNodes[2]).appendChild(phone);
     });
    
 }

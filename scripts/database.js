@@ -99,45 +99,20 @@ class Database{
       }
     }
     return JSON.stringify(myList);
-    // switch (type) {
-    //   case "name":
-    //     for (let record of apptArr){
-    //       record=JSON.parse(record)
-    //       if(record.name==value){
-    //         return JSON.stringify(record);
-    //       }
-    //     }
-    //     break;
-    //   case "date":
-    //     for (let record of apptArr){
-    //       record=JSON.parse(record)
-    //       if(record.date==value){
-    //         return JSON.stringify(record);
-    //       }
-    //     }
-    //     break;
-    //   case "phone":
-    //     for (let record of apptArr){
-    //       record=JSON.parse(record)
-    //       if(record.phone==value){
-    //         return JSON.stringify(record);
-    //       }
-    //     }
-    //     break;
-    //   default:
-    //     break;
-    //   }
     
-    //return false;
   }
 
   //Add new record
   addRecord(record){
-    let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
-    apptArr.push(record);
+    let myRecord = JSON.parse(record);
+    if(!this.getRecord(myRecord.date, myRecord.time)){
+      let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+      apptArr.push(record);
 
-    this.updateStorage(apptArr);
-    return true;
+     this.updateStorage(apptArr);
+      return true;
+    }
+    return false;
   }
 
   deleteRecord(record){

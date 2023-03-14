@@ -40,31 +40,13 @@ class Server{
                             request.responseText=list;
                         }
                         break;
-                //         else if(type=="name")
-                // {
-                //     let response=this.db.getRecord(type, value);
-                //     if(!response){
-                //         request.status=404;
-                //     }else{
-                //         request.responseText=response;
-                //     }
-                // }
-                // else if(type=="date")
-                // {
-                //     let response=this.db.getRecord(type, value);
-                //     if(!response){
-                //         request.status=404;
-                //     }else{
-                //         request.responseText=response;
-                //     }
-                // }
-                        break;
+    
                 }
                 break;
 
             case 'POST':
                 if(!this.db.addRecord(request.body)){
-                    request.status=404; 
+                    request.status=422; 
                 }
                 break;
 

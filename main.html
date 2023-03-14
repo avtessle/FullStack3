@@ -2,162 +2,202 @@
 <html>
 
   <head>
-    <title>App Page</title>
-    
+    <title>my app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./styles/topnav.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/footer.css" />
   </head>
 
   <body>
-    <template id="home">
-      <div>
 
-        <h1>Home</h1>
-        <ol>
-          <li><a href="#" target="home" class="nav-link">HOME</a></li>
-          <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
-          <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
-        </ol>
+    <header>
+      <nav>
+          <ul class="listnav">
+            <li><a href="#" target="home" class="nav-link">HOME</a></li>
+            <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
+            <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
+          </ul>
+      </nav>
+    </header> 
 
+      <template id="home">
         <div>
-          <h2>My daily schedule</h2><br><br>
+          <div class="about">
+            <h1>Home</h1>
+            <h3>sub header</h3>
+            <p>some explain...</p>
+          </div>
+        
+          <div>
+            <div class="date_selection">
+              <input type="date" id="today">
+              <p>Select a date to view the calendar of meetings scheduled for that date.</p>
+            </div>
 
-          <h4 id="mydate">Date: </h4>
-          <input type="date" id="today">
-          <table id="myDayTable">
-          <!-- <tr>
-            <th></th>
-            <th>name</th>
-            <th>phone</th>
-          </tr>
-          <tr id="08:00">
-            <th>08:00</th>
-          </tr>
-          <tr id="09:00">
-            <th>09:00</th>
-          </tr>
-          <tr id="10:00">
-            <th>10:00</th>
-          </tr>
-          <tr id="11:00">
-            <th>11:00</th>
-          </tr>
-          <tr id="12:00">
-            <th>12:00</th>
-          </tr>
-          <tr id="13:00">
-            <th>13:00</th>
-          </tr>
-          <tr id="14:00">
-            <th>14:00</th>
-          </tr>
-          <tr id="15:00">
-            <th>15:00</th>
-          </tr>
-          <tr id="16:00">
-              <th>16:00</th>
-            </tr>
-            <tr id="17:00">
-              <th>17:00</th>
-            </tr>
-            <tr id="18:00">
-              <th>18:00</th>
-            </tr>
-            <tr id="19:00">
-              <th>19:00</th>
-            </tr>
-            <tr id="20:00">
-              <th>20:00</th>
-            </tr>
-             -->
-          </table>
+            <div>
+              <table id="myDayTable">
+                <thead>
+                  <tr>
+                    <th scope="col" class="emptyCell"></th>
+                    <th scope="col">Name:</th>
+                    <th scope="col">Phone:</th>              
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </div>
+        </div>
+        </div>
+      </template>
+
+      <template id="appointment">
+        <div>
+          <h1>Appointment</h1>
+          <!-- <ol>
+            <li><a href="#" target="home" class="nav-link">HOME</a></li>
+            <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
+            <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
+          </ol> -->
+          <!-- add new appearance -->
+          <form id="newAppointment" onsubmit="validateForm()">
+            <label class="clientInfo">Name: </label>
+            <input type="text" id="cname" minlength="2" maxlength="25" pattern="([a-zA-Z\s]){2,}" value="" required><br><br>
+            <label class="clientInfo">Phone number: </label>
+            <input type="tel" id="cphone" required placeholder="05X-XXX-XXXX" pattern="05[0-9]{1}-[0-9]{3}-[0-9]{4}"><br><br>
+            <label class="clientInfo">Date: </label>
+            <input type="date" id="cdate" required><br><br>
+            <label class="clientInfo">Time: </label> 
+            <input list="hour" id="ctime" appearance="date" required>
+              <datalist id="hour">
+                <option value="08:00">
+                <option value="09:00">
+                <option value="10:00">
+                <option value="11:00">
+                <option value="12:00">
+                <option value="13:00">
+                <option value="14:00">
+                <option value="15:00">
+                <option value="16:00">
+                <option value="17:00">
+                <option value="18:00">
+                <option value="19:00">
+                <option value="20:00">
+              </datalist><br><br>
+            <input type="submit" id="addMeating" value="Add an appointment">
+          </form>      
+        </div>
+      </template>
+
+      <template id="search">
+        <div id="searchDiv">
+          <h1>Search</h1>
+          <!-- <ol>
+            <li><a href="#" target="home" class="nav-link">HOME</a></li>
+            <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
+            <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
+          </ol> -->
+
+          <h1 id="allRecs"></h1>
+
+          <form>
+            <!-- <label>Search by name: </label>
+            <input type="search" id="search_date" placeholder="date" required>
+            <input type="search" id="search_our" placeholder="hour" required> -->
+            <label>Date: </label>
+            <input type="date" id="searchDate" required><br><br>
+            <label>Time: </label> 
+            <input list="hours" id="searchTime" appearance="date" required>
+              <datalist id="hours">
+                <option value="08:00">
+                <option value="09:00">
+                <option value="10:00">
+                <option value="11:00">
+                <option value="12:00">
+                <option value="13:00">
+                <option value="14:00">
+                <option value="15:00">
+                <option value="16:00">
+                <option value="17:00">
+                <option value="18:00">
+                <option value="19:00">
+                <option value="20:00">
+              </datalist><br><br>
+            <button id="searchnameB">search</button>
+          </form>
+
+          <h1 id="showRec"></h1>
+          <button id="editBtn">edit</button>
+          <button id="deleteBtn">delete</button>
 
         </div>
-      
+      </template>
+
+    <!-- base on code from: 
+      https://www.csscodelab.com/html-footer-example-source-code/ -->
+    <footer id="myFooter" class="footer-distributed">
+
+      <div class="footer-left">
+
+        <h3>Company<span>logo</span></h3>
+
+        <p class="footer-links">
+          <a href="#" class="link-1">Home</a>
+          
+          <a href="#">Blog</a>
+        
+          <a href="#">Pricing</a>
+        
+          <a href="#">About</a>
+          
+          <a href="#">Faq</a>
+          
+          <a href="#">Contact</a>
+        </p>
+
+        <p class="footer-company-name">Company Name © 2015</p>
+      </div>
+
+      <div class="footer-center">
+
+        <div>
+          <i class="fa fa-map-marker"></i>
+          <p><span>444 S. Cedros Ave</span> Solana Beach, California</p>
+        </div>
+
+        <div>
+          <i class="fa fa-phone"></i>
+          <p>+1.555.555.5555</p>
+        </div>
+
+        <div>
+          <i class="fa fa-envelope"></i>
+          <p><a href="mailto:support@company.com">support@company.com</a></p>
+        </div>
 
       </div>
-    </template>
 
-    <template id="appointment">
-      <div>
-        <h1>Appointment</h1>
-        <ol>
-          <li><a href="#" target="home" class="nav-link">HOME</a></li>
-          <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
-          <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
-        </ol>
-        <!-- add new appearance -->
-        <form id="newAppointment" onsubmit="validateForm()">
-          <label class="clientInfo">Name: </label>
-          <input type="text" id="cname" minlength="2" maxlength="25" pattern="([a-zA-Z\s]){2,}" value="" required><br><br>
-          <label class="clientInfo">Phone number: </label>
-          <input type="tel" id="cphone" required placeholder="05X-XXX-XXXX" pattern="05[0-9]{1}-[0-9]{3}-[0-9]{4}"><br><br>
-          <label class="clientInfo">Date: </label>
-          <input type="date" id="cdate" required><br><br>
-          <label class="clientInfo">Time: </label> 
-          <input list="hour" id="ctime" appearance="date" required>
-            <datalist id="hour">
-              <option value="08:00">
-              <option value="09:00">
-              <option value="10:00">
-              <option value="11:00">
-              <option value="12:00">
-              <option value="13:00">
-              <option value="14:00">
-              <option value="15:00">
-              <option value="16:00">
-              <option value="17:00">
-              <option value="18:00">
-              <option value="19:00">
-              <option value="20:00">
-            </datalist><br><br>
-          <input type="submit" id="addMeating" value="Add an appointment">
-        </form>      
-      </div>
-    </template>
+      <div class="footer-right">
 
-    <template id="search">
-      <div id="searchDiv">
-        <h1>Search</h1>
-        <ol>
-          <li><a href="#" target="home" class="nav-link">HOME</a></li>
-          <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
-          <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
-        </ol>
+        <p class="footer-company-about">
+          <span>About the company</span>
+          Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+        </p>
 
-        <h1 id="allRecs"></h1>
+        <div class="footer-icons">
 
-        <form>
-          <!-- <label>Search by name: </label>
-          <input type="search" id="search_date" placeholder="date" required>
-          <input type="search" id="search_our" placeholder="hour" required> -->
-          <label>Date: </label>
-          <input type="date" id="searchDate" required><br><br>
-          <label>Time: </label> 
-          <input list="hours" id="searchTime" appearance="date" required>
-            <datalist id="hours">
-              <option value="08:00">
-              <option value="09:00">
-              <option value="10:00">
-              <option value="11:00">
-              <option value="12:00">
-              <option value="13:00">
-              <option value="14:00">
-              <option value="15:00">
-              <option value="16:00">
-              <option value="17:00">
-              <option value="18:00">
-              <option value="19:00">
-              <option value="20:00">
-            </datalist><br><br>
-          <button id="searchnameB">search</button>
-        </form>
+          <a href="#"><i class="fa fa-facebook"></i></a>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#"><i class="fa fa-linkedin"></i></a>
+          <a href="#"><i class="fa fa-github"></i></a>
 
-        <h1 id="showRec"></h1>
-        <button id="editBtn">edit</button>
-        <button id="deleteBtn">delete</button>
+        </div>
 
       </div>
-    </template>
 
+    </footer>
     <script  src="./scripts/database.js"></script>
     <script  src="./scripts/server.js"></script>
     <script  src="./scripts/network.js"></script>

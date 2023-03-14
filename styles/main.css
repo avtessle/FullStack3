@@ -1,0 +1,119 @@
+
+div {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+table{
+    display: inline-table;
+    margin: ;
+    /* align-items: center;
+    justify-content: center;
+    text-align: center; */
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 10px;
+    color: rgb(3, 69, 84);
+    padding-top: 3em;
+
+}
+
+h3{
+    text-align: center;
+    margin-bottom: 10px;
+    color: rgb(190, 132, 147);
+}
+p{
+    text-align: center;
+    margin-bottom: 10px;
+    color: rgb(146, 202, 214);
+}
+
+@media only screen and (max-width: 400px){
+    .image-container{
+        display:flex;
+        justify-content:center;
+        flex-direction: column;
+    }
+    .logo{
+        display: flex;
+        justify-content: center;
+        height: 10em;
+        padding-top:5em;
+    }
+    
+    .logo-photo{
+        border: none;
+        border-radius:none;
+        padding-top:8em;
+        margin-top: 15em;
+        width: 14em;
+        height: 7em;
+        object-fit: fill;
+        border: 4px dotted rgb(3, 69, 84);
+        border-radius: 50%;
+    }
+    
+
+}
+a:link {
+    text-decoration: none;
+  }
+
+figcaption{
+
+    color: rgb(3, 69, 84);
+
+    text-align: center;
+
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    height: 5em;
+    padding-top: 4em;
+}
+
+.logo-photo{
+    border: none;
+    border-radius:none;
+    margin-top: 6em;
+    width: 14em;
+    height: 5em;
+    object-fit: fill;
+    border: 4px dotted rgb(3, 69, 84);
+    border-radius: 50%;
+}
+
+img {
+
+    float: left;
+
+    width: 300px;
+
+    height: 300px;
+
+    object-fit: cover;
+
+    border: 6px solid rgb(3, 69, 84);
+
+    border-radius: 5px;
+
+}
+
+.image-container{
+
+    display:flex;
+    justify-content:center;
+}
+
+#myDayTable td {
+    padding-right: 15px;
+    background-color:rgb(80, 103, 110);
+    color: rgb(64, 25, 191);
+}
+

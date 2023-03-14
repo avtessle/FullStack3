@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', init);
 // login and register- move to login.js
 function initHome(){
     setDeafultDate("today");
-    selectDay();
+    createDailyTable();
+    // selectDay();
     document.getElementById("today").addEventListener("change",selectDay);
     
     
@@ -98,8 +99,8 @@ function initHome(){
 }
 
 function selectDay(){
-    createDailyTable();
-    let meeting= seeDateRecord(document.getElementById("today").value);
+    cleanTableMeeting();
+    let meeting= getRecordsByDate(document.getElementById("today").value);
 }
 
 
@@ -130,7 +131,7 @@ function searchRec(){
 // }
 
 // Adam Beer July 23
-// from https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
+//base on code from https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
 function setDeafultDate(id) {
     var today = new Date(Date.now());
     var dd = today.getDate();
@@ -151,32 +152,37 @@ function setDeafultDate(id) {
 }
   
 function createDailyTable(){
-    
-    let myTable = document.getElementById("myDayTable");
-    myTable.innerHTML='';
-    let header = document.createElement('tr');
-    
-    header.appendChild(document.createElement('th')); 
-    let name = document.createElement('th');
-    name.innerHTML = "name";
-   // neme.style.width='200px';
-    let phone = document.createElement('th');
-    phone.innerHTML = "phone";
-    //phone.style.width='200px';
-    
-    header.appendChild(name);
-    header.appendChild(phone);
+    var row, hourCol, nameCell, phoneCell;
+    var myTable = document.getElementById("myDayTable").getElementsByTagName('tbody')[0];
+    //myTable.innerHTML="";
 
-    myTable.appendChild(header);
+    for(let time = 8; time<21; time++){    
+        time = time.toString().padStart(2,"0");
+        row = myTable.insertRow(myTable.rows.length);
+        row.id = time + ":00";
+        
+        hourCol = document.createElement('th');
+        hourCol.setAttribute('scope',"row");
+        hourCol.textContent = row.id;
 
-    for(let time = 9; time<21; time++){
-        let rowTime = document.createElement('tr');
-        let myTime = document.createElement('th');
-        rowTime.id = time+":00";
-        myTime.innerHTML= time+":00";
+        nameCell = document.createElement('td');
+        phoneCell = document.createElement('td');
 
-        rowTime.appendChild(myTime);
-        myTable.appendChild(rowTime);
+        row.appendChild(hourCol);
+        row.appendChild(nameCell);
+        row.appendChild(phoneCell);
+ 
     }
 
+}
+
+function cleanTableMeeting(){
+    var rowHour;
+    
+    for(let time = 8; time<21; time++){    
+        time = time.toString().padStart(2,"0");
+        rowHour = document.getElementById(time+":00");
+        (rowHour.childNodes[1]).innerHTML="";
+        (rowHour.childNodes[2]).innerHTML="";
+    }
 }
