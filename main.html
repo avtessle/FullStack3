@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./styles/topnav.css" />
     <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/appointments.css"/>
     <link rel="stylesheet" type="text/css" href="./styles/search.css" />
     <link rel="stylesheet" type="text/css" href="./styles/footer.css" />
 
@@ -17,7 +18,7 @@
       <nav>
           <ul class="listnav">
             <li><a href="#" target="home" class="nav-link">HOME</a></li>
-            <li><a href="#" target="appointment" class="nav-link">APPOINTMENT</a></li>
+            <li><a href="#" target="appointment" class="nav-link">NEW APPOINTMENT</a></li>
             <li><a href="#" target="search" class="nav-link">SEARCH</a></li>
           </ul>
       </nav>
@@ -58,8 +59,8 @@
       </template>
 
       <template id="appointment">
-        <div>
-          <h1>Appointment</h1>
+        <div id="apptDiv">
+          <h1>Add New Appointment</h1>
    
           <!-- add new appearance -->
           <form id="newAppointment" onsubmit="validateForm()">
@@ -127,7 +128,8 @@
             <option value="19:00">
             <option value="20:00">
           </datalist><br><br>
-        <button id="searchnameB" class="recBtn">search</button>
+        <button id="searchnameB" class="recBtn">
+          search</button>
       </form>
 
       </div>

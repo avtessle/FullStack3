@@ -1,9 +1,11 @@
 class Database{
 
   constructor(){
+    //Users array as JavaScript array
     this.usersArr=this.initializeUsers();
   }
   
+  //Initialize te user array (bring from local storage or create a new one)
   initializeUsers(){
     let arr=localStorage.getItem("all_users");
     if(arr===null){
@@ -32,7 +34,7 @@ class Database{
     return false;
   }
 
-  //Add new user
+  //Add a new user
   addUser(user){
     user=JSON.parse(user);
     for (let userCheck of this.usersArr){
@@ -44,25 +46,20 @@ class Database{
 
     user.appointments=[];
     if(this.addUserData(user)){
-      //this.apptArr=user.appointments;
       sessionStorage.setItem("cuurentUser",JSON.stringify(user));
       return true;
     }
   }
 
+  //Add user to the local storage
   addUserData(user){
-    //test username
+
     let tesRegex=  /^[A-Za-z]\w*$/;
     if(!user.name.match(tesRegex)) 
     { 
       alert("username must atart with a letter and contain only characters, digits and underscore");
       return false;
     }
-  
-    // //test password
-    // if (!checkPassword(userPassword)){
-    //   return false;
-    // }
   
     this.usersArr.push(user);
     localStorage.setItem('all_users',JSON.stringify(this.usersArr));
@@ -79,7 +76,7 @@ class Database{
   getRecord(date,time){
     let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
     for (let record of apptArr){
-      record=JSON.parse(record)
+      record=JSON.parse(record);
       if(record.date==date && record.time===time){
         return JSON.stringify(record);
       }
@@ -87,6 +84,7 @@ class Database{
       return false;
   }
 
+  //Get group of records by a specific record proprety
   getRecords(type, value){
     let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
     let myList = []; 
@@ -100,7 +98,7 @@ class Database{
     
   }
 
-  //Add new record
+  //Add a new record
   addRecord(record){
     let myRecord = JSON.parse(record);
     if(!this.getRecord(myRecord.date, myRecord.time)){
@@ -113,6 +111,7 @@ class Database{
     return false;
   }
 
+  //Delete a record
   deleteRecord(record){
     let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
     const index = apptArr.indexOf(record);
@@ -121,29 +120,37 @@ class Database{
     return true;
   }
 
-  editRecord(date, time, updatedRecord){
+  //Edit a record (gets the original date and time)
+  editRecord(date, time, updatedRec){
+
     let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
-    updatedRecord=JSON.parse(updatedRecord);
+    updatedRec=JSON.parse(updatedRec);
     let currentAppt;
+    let index;
 
     for (let i = 0; i < apptArr.length; i++) {
       currentAppt=JSON.parse(apptArr[i]);
 
-      //Found appt in this time
-      if(updatedRecord.date===currentAppt.date && updatedRecord.time===currentAppt.time)
-      {
+      //Foud the record index
+      if(date===currentAppt.date || time!==currentAppt.time){
+        index=i;
+      }
 
-        //The found appt is the updated one
-        if(updatedRecord.date=== date && updatedRecord.time===time){
-          apptArr[i]=JSON.stringify(updatedRecord);
-          this.updateStorage(apptArr);
-          return true;
-        }
+      //Appt was found in the updataed time and it is not this record
+      if(updatedRec.date===currentAppt.date && updatedRec.time===currentAppt.time){
+        if(currentAppt.date!==date || currentAppt.time!==time){
           return false;
+        }
       }
     }
+
+    //Update the record
+    apptArr[index]=JSON.stringify(updatedRec);
+    this.updateStorage(apptArr);
+    return true;
   }
 
+  //Update local and session storage
   updateStorage(apptArr){
     //Update currentUser appointments
     let currentUser=JSON.parse(sessionStorage.getItem("cuurentUser"));

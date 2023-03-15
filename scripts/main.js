@@ -115,7 +115,6 @@ function initSearch(){
 
 //Search record by name
 function searchRec(){
-    //let name = document.getElementById("search_name").value;
     let date= document.getElementById("searchDate").value;
     let time= document.getElementById("searchTime").value;
     if(date && time){

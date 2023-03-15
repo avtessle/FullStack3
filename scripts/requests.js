@@ -1,4 +1,3 @@
-var run_id=0;
 let observedRec;
 
 //See all the records- request
@@ -7,7 +6,6 @@ function seeAll(){
     request.onload= function() {
         if (this.status == 200) {
             allRecsTable(JSON.parse(request.responseText));
-            //document.getElementById("allRecs").innerHTML=request.responseText;
     }};
     request.open("GET", "appointment/all");
     request.send();   
@@ -40,7 +38,6 @@ function getRecordsByDate(date){
         }
         else{
             alert("No matching appointment");
-            //recVisibility('hidden');
         }
     };
     request.open("GET", `appointment/multi/date/${date}`);
@@ -52,7 +49,7 @@ function add(newRecord){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-            alert("appointment added!");
+            alert("Appointment was added");
         } else if(this.status == 422)
         {
             alert("It is not possible to make the appointment at the chosen time. Choose another date.");
@@ -67,14 +64,23 @@ function editRecord(evt){
     let updatedRec=evt.currentTarget.param;
 
     let request=new FXMLHttpRequest();    
-    request.onload= function() {;
+    request.onload= function() {
+
+        //Update the observed record and the all-records table
         if (this.status == 200) {
             observedRec= Object.assign({}, updatedRec); // observedRec=updatedRec
             alert('Appointment details have been successfully updated');
             seeAll();
-        } else if(this.status == 422)
+        } 
+        
+        //The appt time is taken- return the time to the original value
+        else if(this.status == 422)
         {
             alert("It is not possible to make the appointment at the chosen time.");
+            const table = document.querySelector('#recTable');
+            const timeRow=table.rows[ table.rows.length - 1 ];
+            const timeCell = timeRow.querySelector('td:last-child');
+            timeCell.innerText=observedRec['time'];
         }
     };
     request.open("PUT", `appointment/update/${observedRec.date}/${observedRec.time}`,JSON.stringify(updatedRec));
@@ -111,11 +117,9 @@ function newRecordInfo(){
         alert("It is not possible to make an appointment at a time that has already passed.");
     }
     else{
-       let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
+       let record={name:cName, phone:cPhone, date:cDate, time:cTime};
         add(JSON.stringify(record)); 
-    }
-
-    
+    } 
 }
 
 function insertMeet(myMeets){
@@ -138,37 +142,69 @@ function displayRec(){
     let table = document.createElement('table');
     table.id = 'recTable';
 
-    // Create the table rows with editable cells for each property of the record
+    //Create the table rows with editable cells for each property of the record
     for (let prop in observedRec) {
-        //if (observedRec.hasOwnProperty(prop)) 
         let row = table.insertRow();
         let labelCell = row.insertCell();
         let valueCell = row.insertCell();
         labelCell.innerText = prop.toUpperCase();
-        if(prop!=="id"){
-            valueCell.contentEditable = true;
-        }
+
+        valueCell.contentEditable = true;
         valueCell.setAttribute("data-property", prop);
         valueCell.innerText = observedRec[prop];
 
-        // EvenetListener for all the cells- save the new input
+        //EvenetListener for all the cells- save the new input
         valueCell.addEventListener("blur", function(event) {
             let cell = event.target;
             let property = cell.getAttribute("data-property");
-            if (property) {
+            //if proprety
+            if (validDtata(property, cell.innerText) ) {
                 updatedRec[property] = cell.innerText;
+            }
+            else{
+                alert('details are not in the right format!');
+                cell.innerText=observedRec[property];
             }
         });
     }
 
+    //Style the table and insert it in the html
     table.classList.add("recTableClass");
     document.getElementById("searchDiv").appendChild(table);
 
+    //updatedRec=observedRec
     let updatedRec= Object.assign({}, observedRec); //updatedRec=observedRec
     
+    //Create edit and delete buttons
     createBtn("deleteBtn","delete",deleteRecord);
     let editBtn=createBtn("editBtn","edit",editRecord);
     editBtn.param=updatedRec;
+}
+
+//Validate data format
+function validDtata(property,data){
+
+    switch(property){
+        case 'name':
+            regex=new RegExp("([a-zA-Z\s]){2,}"); 
+            break;
+        case 'phone':
+            regex=new RegExp("05[0-9]{1}-[0-9]{3}-[0-9]{4}");
+            break;
+        case 'date':
+            regex=new RegExp('^\\d{4}-\\d{2}-\\d{2}$');
+            break;
+        case 'time':
+            regex=new RegExp('^(1[0-9]|20|08|09):00$');
+            break;
+        default:
+            break;
+    }
+
+    if (regex.test(data)) {
+        return true;
+    }
+    return false;
 }
 
 //Create buuton and add it to the DOM
@@ -198,15 +234,18 @@ function removeRecDisplay(){
     }
 }
 
+//Create the table of all the records
 function allRecsTable(allRecs){
     const listElement = document.getElementById('allRecs');
     listElement.innerHTML='';
     const columns = ['name', 'phone', 'date', 'time'];
     
+    //For each record 
     allRecs.forEach(item => {
         item=JSON.parse(item);
         const rowElement = document.createElement('tr');
         
+        //For each proprety
         columns.forEach(column => {
             const cellElement = document.createElement('td');
             cellElement.innerHTML = item[column];

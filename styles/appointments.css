@@ -1,0 +1,35 @@
+#apptDiv{
+    background-color: white;
+    border-radius:5%;
+    margin: 5% 20%;
+}
+
+#apptDiv h1{
+    margin-bottom: 50px;
+}
+
+#newAppointment * {
+    padding: 5px;
+    margin: 7px;
+}
+
+#newAppointment input:not(#addMeating) {
+    width: 200px;
+    padding: 7px;
+}
+
+#addMeating{
+    margin: 20px;
+    margin-bottom: 50px;
+    padding: 15px;
+    border: none;
+    color: white;
+    background-color:rgb(3, 69, 84);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#addMeating:hover{
+    background-color: rgba(3, 69, 84, 0.219);
+    color: black;
+}
