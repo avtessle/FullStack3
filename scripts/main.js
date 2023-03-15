@@ -58,7 +58,7 @@ function validateForm(){
     //    checkDate();
 
         newRecordInfo();
-
+        //return true;
     }
     return false;
 }
@@ -87,6 +87,8 @@ document.addEventListener('DOMContentLoaded', init);
 function initHome(){
     setDeafultDate("today");
     createDailyTable();
+    getRecordsByDate(document.getElementById("today").value);
+
     // selectDay();
     document.getElementById("today").addEventListener("change",selectDay);
     
@@ -100,7 +102,7 @@ function initHome(){
 
 function selectDay(){
     cleanTableMeeting();
-    let meeting= getRecordsByDate(document.getElementById("today").value);
+    getRecordsByDate(document.getElementById("today").value);
 }
 
 
@@ -108,7 +110,7 @@ function selectDay(){
 function initSearch(){
     document.getElementById("searchnameB").addEventListener('click', searchRec);
     setDeafultDate("searchDate");
-    seeAll();
+    seeAll();
 }
 
 //Search record by name
@@ -131,17 +133,9 @@ function searchRec(){
 //base on code from https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
 function setDeafultDate(id) {
     var today = new Date(Date.now());
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
+    var dd = (today.getDate()).toString().padStart(2,"0");
+    var mm = (today.getMonth()+1).toString().padStart(2,"0"); //January is 0!
     var yyyy = today.getFullYear();
-  
-    if(dd<10) {
-        dd = '0'+dd
-    } 
-  
-    if(mm<10) {
-        mm = '0'+mm
-    } 
   
     today = yyyy + '-' + mm + '-' + dd;
     console.log(today);

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./styles/topnav.css" />
     <link rel="stylesheet" type="text/css" href="./styles/main.css" />
-    <link rel="stylesheet" type="text/css" href="./styles/footer.css" /><link rel="stylesheet" href="./styles/main.css"> 
+    <link rel="stylesheet" type="text/css" href="./styles/footer.css" />
+
   </head>
 
   <body>
@@ -20,6 +21,8 @@
           </ul>
       </nav>
     </header> 
+
+    <main>
 
       <template id="home">
         <div>
@@ -60,7 +63,7 @@
           <!-- add new appearance -->
           <form id="newAppointment" onsubmit="validateForm()">
             <label class="clientInfo">Name: </label>
-            <input type="text" id="cname" minlength="2" maxlength="25" pattern="([a-zA-Z\s]){2,}" value="" required><br><br>
+            <input type="text" id="cname" minlength="2" maxlength="25" placeholder="XX... | X∈{a-zA-Z\s}" pattern="([a-zA-Z\s]){2,}" value="" required><br><br>
             <label class="clientInfo">Phone number: </label>
             <input type="tel" id="cphone" required placeholder="05X-XXX-XXXX" pattern="05[0-9]{1}-[0-9]{3}-[0-9]{4}"><br><br>
             <label class="clientInfo">Date: </label>
@@ -85,7 +88,7 @@
             <input type="submit" id="addMeating" value="Add an appointment">
           </form>      
         </div>
-      </template>
+      </template>
 
   <template id="search">
     <div id="searchDiv">
@@ -121,75 +124,16 @@
 
       </div>
     </template>
+  </main>
 
-    <!-- base on code from: 
-      https://www.csscodelab.com/html-footer-example-source-code/ -->
-    <footer id="myFooter" class="footer-distributed">
-
-      <div class="footer-left">
-
-        <h3>Company<span>logo</span></h3>
-
-        <p class="footer-links">
-          <a href="#" class="link-1">Home</a>
-          
-          <a href="#">Blog</a>
-        
-          <a href="#">Pricing</a>
-        
-          <a href="#">About</a>
-          
-          <a href="#">Faq</a>
-          
-          <a href="#">Contact</a>
-        </p>
-
-        <p class="footer-company-name">Company Name © 2015</p>
-      </div>
-
-      <div class="footer-center">
-
-        <div>
-          <i class="fa fa-map-marker"></i>
-          <p><span>444 S. Cedros Ave</span> Solana Beach, California</p>
-        </div>
-
-        <div>
-          <i class="fa fa-phone"></i>
-          <p>+1.555.555.5555</p>
-        </div>
-
-        <div>
-          <i class="fa fa-envelope"></i>
-          <p><a href="mailto:support@company.com">support@company.com</a></p>
-        </div>
-
-      </div>
-
-      <div class="footer-right">
-
-        <p class="footer-company-about">
-          <span>About the company</span>
-          Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
-        </p>
-
-        <div class="footer-icons">
-
-          <a href="#"><i class="fa fa-facebook"></i></a>
-          <a href="#"><i class="fa fa-twitter"></i></a>
-          <a href="#"><i class="fa fa-linkedin"></i></a>
-          <a href="#"><i class="fa fa-github"></i></a>
-
-        </div>
-
-      </div>
-
-    </footer>
+    <footer>
+      <h1>Footer Content</h1>
+  </footer>
     <script  src="./scripts/database.js"></script>
     <script  src="./scripts/server.js"></script>
     <script  src="./scripts/network.js"></script>
     <script  src="./scripts/fajax.js"></script>
     <script  src="./scripts/requests.js"></script>
     <script  src="./scripts/main.js"></script>
-  </body>
+  </body>
 </html>

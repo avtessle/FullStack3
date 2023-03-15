@@ -131,9 +131,9 @@ class Database{
         apptArr[i]=updatedRecord;
         this.updateStorage(apptArr);
         return true;
-      }
-    }
-  }
+      }
+    }
+  }
 
   updateStorage(apptArr){
     //Update currentUser appointments

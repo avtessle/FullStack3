@@ -100,8 +100,18 @@ function newRecordInfo(){
     let cDate = document.getElementById("cdate").value;
     let cTime = document.getElementById("ctime").value;
 
-    let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
-    add(JSON.stringify(record));
+    let now = (new Date(Date.now())).toLocaleDateString();
+    let selectedDate = (new Date(cDate)).toLocaleDateString();
+    alert("now: "+now+"\nselected date: "+selectedDate);
+    if(selectedDate<now){
+        alert("It is not possible to make an appointment at a time that has already passed.");
+    }
+    else{
+       let record={id:run_id++, name:cName, phone:cPhone, date:cDate, time:cTime};
+        add(JSON.stringify(record)); 
+    }
+
+    
 }
 
 function insertMeet(myMeets){
