@@ -108,7 +108,7 @@ function selectDay(){
 function initSearch(){
     document.getElementById("searchnameB").addEventListener('click', searchRec);
     setDeafultDate("searchDate");
-    seeAll();
+    seeAll();
 }
 
 //Search record by name

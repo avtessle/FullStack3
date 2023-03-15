@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./styles/topnav.css" />
     <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/search.css" />
     <link rel="stylesheet" type="text/css" href="./styles/footer.css" /><link rel="stylesheet" href="./styles/main.css"> 
   </head>
 
@@ -90,13 +91,24 @@
   <template id="search">
     <div id="searchDiv">
       <h1>Search</h1>
-      <h1 id="allRecs"></h1>
+      <table id="allRecs">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="my-list">
+        </tbody>
+      </table>
 
-      <form>
+      <form class="searchForm">
         <label>Date: </label>
-        <input type="date" id="searchDate"><br><br>
+        <input type="date" id="searchDate" class="searchInput"><br><br>
         <label>Time: </label> 
-        <input list="hours" id="searchTime" appearance="date" required>
+        <input list="hours" id="searchTime" class="searchInput" appearance="date" required>
           <datalist id="hours">
             <option value="08:00">
             <option value="09:00">
@@ -112,12 +124,8 @@
             <option value="19:00">
             <option value="20:00">
           </datalist><br><br>
-        <button id="searchnameB">search</button>
+        <button id="searchnameB" class="recBtn">search</button>
       </form>
-
-        <!-- <h1 id="showRec"></h1>
-        <button id="editBtn">edit</button>
-        <button id="deleteBtn">delete</button> -->
 
       </div>
     </template>
