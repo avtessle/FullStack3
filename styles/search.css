@@ -1,0 +1,84 @@
+/* Buttons */
+.recBtn{
+    margin: 20px;
+    height: 50px;
+    width: 100px;
+    border: none;
+    color: white;
+    background-color:rgb(3, 69, 84);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.recBtn:hover{
+    background-color: rgba(3, 69, 84, 0.219);
+    color: black;
+}
+
+
+/* All records table */
+#allRecs{
+    border-collapse: collapse;
+    width: 70%;
+    margin: 20px;
+}
+
+#allRecs th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+#allRecs th {
+    background-color: rgba(7, 73, 88, 0.212);
+    font-weight: bold;
+    color: rgb(3, 69, 84);
+}
+
+
+/* Search form */
+.searchForm{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 10px 80px 10px;
+}
+
+.searchForm button{
+    margin-left: 100px;
+    margin-right: 0px;
+}
+
+.searchInput{
+    margin: 10px 30px 10px 10px;
+    padding: 10px;
+}
+
+
+/* Record table */
+.recTableClass {
+    margin: 0px 100px 100px 20px;
+    width: 60%;
+    font-size: 20px;
+    border-collapse: separate; 
+    border-spacing: 5px;
+    /* display: block; */
+}
+
+.recTableClass td {
+    border: none;
+    padding: 10px;
+    background-color:white;
+}
+
+.recTableClass td:first-child {
+    font-weight: bold;
+    background-color: inherit;
+    text-align: left;
+    width: 100px;
+}
+
+.recTableClass td:nth-child(2):hover {
+    background-color: #f5f5f5;
+}
+

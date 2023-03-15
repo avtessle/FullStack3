@@ -58,7 +58,7 @@ class Server{
 
             case 'PUT':
                 if(!this.db.editRecord(value1, value2, request.body)){
-                    request.status=404; 
+                    request.status=422; 
                 }
                 break;
         }

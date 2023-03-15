@@ -6,7 +6,8 @@ function seeAll(){
     let request=new FXMLHttpRequest();    
     request.onload= function() {
         if (this.status == 200) {
-            document.getElementById("allRecs").innerHTML=request.responseText;
+            allRecsTable(JSON.parse(request.responseText));
+            //document.getElementById("allRecs").innerHTML=request.responseText;
     }};
     request.open("GET", "appointment/all");
     request.send();   
@@ -68,9 +69,12 @@ function editRecord(evt){
     let request=new FXMLHttpRequest();    
     request.onload= function() {;
         if (this.status == 200) {
-            observedRec=updatedRec;
+            observedRec= Object.assign({}, updatedRec); // observedRec=updatedRec
             alert('Appointment details have been successfully updated');
             seeAll();
+        } else if(this.status == 422)
+        {
+            alert("It is not possible to make the appointment at the chosen time.");
         }
     };
     request.open("PUT", `appointment/update/${observedRec.date}/${observedRec.time}`,JSON.stringify(updatedRec));
@@ -136,29 +140,32 @@ function displayRec(){
 
     // Create the table rows with editable cells for each property of the record
     for (let prop in observedRec) {
-        if (observedRec.hasOwnProperty(prop)) {
-            let row = table.insertRow();
-            let labelCell = row.insertCell();
-            let valueCell = row.insertCell();
-            labelCell.innerText = prop;
+        //if (observedRec.hasOwnProperty(prop)) 
+        let row = table.insertRow();
+        let labelCell = row.insertCell();
+        let valueCell = row.insertCell();
+        labelCell.innerText = prop.toUpperCase();
+        if(prop!=="id"){
             valueCell.contentEditable = true;
-            valueCell.setAttribute("data-property", prop);
-            valueCell.innerText = observedRec[prop];
-
-            // EvenetListener for all the cells- save the new input
-            valueCell.addEventListener("blur", function(event) {
-                let cell = event.target;
-                let property = cell.getAttribute("data-property");
-                if (property) {
-                    updatedRec[property] = cell.innerText;
-                }
-            });
         }
+        valueCell.setAttribute("data-property", prop);
+        valueCell.innerText = observedRec[prop];
+
+        // EvenetListener for all the cells- save the new input
+        valueCell.addEventListener("blur", function(event) {
+            let cell = event.target;
+            let property = cell.getAttribute("data-property");
+            if (property) {
+                updatedRec[property] = cell.innerText;
+            }
+        });
     }
 
+    table.classList.add("recTableClass");
     document.getElementById("searchDiv").appendChild(table);
 
-    let updatedRec=observedRec;
+    let updatedRec= Object.assign({}, observedRec); //updatedRec=observedRec
+    
     createBtn("deleteBtn","delete",deleteRecord);
     let editBtn=createBtn("editBtn","edit",editRecord);
     editBtn.param=updatedRec;
@@ -170,6 +177,7 @@ function createBtn(id, text,eventListener){
     button.innerText = text;
     button.setAttribute("type", "button");
     button.setAttribute("id", id);
+    button.setAttribute("class", "recBtn");
     document.getElementById("searchDiv").appendChild(button);
     button.addEventListener('click',eventListener);
     return button;
@@ -188,4 +196,23 @@ function removeRecDisplay(){
             }
         }
     }
+}
+
+function allRecsTable(allRecs){
+    const listElement = document.getElementById('allRecs');
+    listElement.innerHTML='';
+    const columns = ['name', 'phone', 'date', 'time'];
+    
+    allRecs.forEach(item => {
+        item=JSON.parse(item);
+        const rowElement = document.createElement('tr');
+        
+        columns.forEach(column => {
+            const cellElement = document.createElement('td');
+            cellElement.innerHTML = item[column];
+            rowElement.appendChild(cellElement);
+        });
+        
+        listElement.appendChild(rowElement);
+    });
 }

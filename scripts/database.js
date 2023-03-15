@@ -121,16 +121,25 @@ class Database{
     return true;
   }
 
-  editRecord(date, time,updatedRecord){
+  editRecord(date, time, updatedRecord){
     let apptArr=JSON.parse(sessionStorage.getItem("cuurentUser")).appointments;
+    updatedRecord=JSON.parse(updatedRecord);
     let currentAppt;
+
     for (let i = 0; i < apptArr.length; i++) {
       currentAppt=JSON.parse(apptArr[i]);
-      if(currentAppt.date===date && currentAppt.time===time){
-        //check if the appt is taken!!!!!!!!!
-        apptArr[i]=updatedRecord;
-        this.updateStorage(apptArr);
-        return true;
+
+      //Found appt in this time
+      if(updatedRecord.date===currentAppt.date && updatedRecord.time===currentAppt.time)
+      {
+
+        //The found appt is the updated one
+        if(updatedRecord.date=== date && updatedRecord.time===time){
+          apptArr[i]=JSON.stringify(updatedRecord);
+          this.updateStorage(apptArr);
+          return true;
+        }
+          return false;
       }
     }
   }
@@ -148,6 +157,4 @@ class Database{
     this.usersArr[index]=currentUser;
     localStorage.setItem('all_users',JSON.stringify(this.usersArr));
   }
-
-
 }
