@@ -103,6 +103,7 @@ function deleteRecord(){
 
 //-------------------------------------------------------------
 
+
 //Get data of the new record to add
 function newRecordInfo(){
     let cName = document.getElementById("cname").value;
@@ -122,6 +123,7 @@ function newRecordInfo(){
     } 
 }
 
+//Insert all meets of specific date into his day-schedule
 function insertMeet(myMeets){
 
     myMeets =JSON.parse(myMeets);

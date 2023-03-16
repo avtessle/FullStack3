@@ -51,6 +51,7 @@ function initApp(){
     //addSubbmit.addEventListener("click",newRecordInfo);
 }
 
+//check validate of form inputs, and add meet if every thing is right
 function validateForm(){
 
     if(checkPattern("cname") && checkPattern("cphone"))
@@ -63,12 +64,7 @@ function validateForm(){
     return false;
 }
 
-// function checkDate(){
-//     var today = new Date(Date.now());
-//     var cdate = document.getElementById("cdate").value;
-//     alert(today.to " today\n"+ cdate + " choose");
-// }
-
+//Function that get id of input, and check if value stand by the pattern
 function checkPattern(id){
     var elem = document.getElementById(id);
 
@@ -91,15 +87,9 @@ function initHome(){
 
     // selectDay();
     document.getElementById("today").addEventListener("change",selectDay);
-    
-    
-    
-    // const showday = new Date("03-05-2023");
-    // //getWeek(showday);
-    // alert("week: "+showday.getDay()+"\nday: "+showday.setDeafultDate("today")+"\nfuuldate: "+showday.toDateString()+"\nhour: "+showday.toTimeString());
-    // // showday.addEventListener('onchange', login);
 }
 
+//Insert all meets of choosen date, into day-schedule
 function selectDay(){
     cleanTableMeeting();
     getRecordsByDate(document.getElementById("today").value);
@@ -123,10 +113,7 @@ function searchRec(){
     document.getElementById("searchTime").value="";
 }
 
-// function getWeek(date){
-//     let myDate = new Date(date);
-//     return "hi";
-// }
+
 
 // Adam Beer July 23
 //base on code from https://teamtreehouse.com/community/html-input-date-field-how-to-set-default-value-to-todays-date
@@ -141,10 +128,10 @@ function setDeafultDate(id) {
     document.getElementById(id).value = today;
 }
   
+//Create table fron day-schedule
 function createDailyTable(){
     var row, hourCol, nameCell, phoneCell;
     var myTable = document.getElementById("myDayTable").getElementsByTagName('tbody')[0];
-    //myTable.innerHTML="";
 
     for(let time = 8; time<21; time++){    
         time = time.toString().padStart(2,"0");
@@ -166,6 +153,7 @@ function createDailyTable(){
 
 }
 
+//remove all meets from the day-schedule
 function cleanTableMeeting(){
     var rowHour;
     
